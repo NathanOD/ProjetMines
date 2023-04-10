@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-public class CSVReader {
+public class CSVInput {
     public  void main(String[] args) {
 
         String csvFile = "C:/Users/hp/OneDrive/Desktop/projet IL/Fichiers/Krakov/1939351_F2.txt";
