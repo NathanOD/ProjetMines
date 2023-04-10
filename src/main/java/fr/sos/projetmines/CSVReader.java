@@ -28,7 +28,7 @@ public class CSVReader {
             pw.print("Ts\t");
             pw.print("Diam_WR\t");
             pw.print("WRyoung\t");
-            pw.print("offset\t");
+            pw.print("offset ini\t");
             pw.print("mu_ini\t");
             pw.print("Force\t");
             pw.print("G");
