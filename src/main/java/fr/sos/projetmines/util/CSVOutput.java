@@ -1,15 +1,16 @@
-package fr.sos.projetmines;
+package fr.sos.projetmines.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class CSVOutput {
+
     private String file;
     private String[][] data;
 
-    public CSVOutput(String filename) {
-        this.file = file;
+    public CSVOutput(String fileName) {
+        this.file = fileName;
     }
 
     public void readCSV() {
