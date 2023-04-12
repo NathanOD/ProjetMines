@@ -4,35 +4,46 @@ package fr.sos.projetmines.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final DatabaseConnection INSTANCE = new DatabaseConnection();
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConnection.class);
+    private static final DatabaseConnection INSTANCE = new DatabaseConnection();
     private Connection connection;
 
-    public DatabaseConnection() {
-        try {
-            Class.forName("org.h2.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+
+    private String address, identifier, password;
+
 
     public static DatabaseConnection getInstance() {
         return INSTANCE;
     }
+
+    public boolean configureConnection(String driver, String databaseAddress) {
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("Driver \"{}\" not found!", driver);
+            return false;
+        }
+        this.address = databaseAddress;
+        return address != null && address.length() > 0;
+    }
+
 
     /**
      * Tries to connect to the Database
      *
      * @return whether the connection is successful
      */
-    public boolean connect(String databaseName, String identifier, String password) {
+    public boolean connect(String identifier, String password) {
+        assert address != null;
         try {
-            connection = DriverManager.getConnection("jdbc:h2:~/" + databaseName, identifier, password);
+            connection = DriverManager.getConnection(address, identifier, password);
             LOGGER.info("Connection to the database established");
             return isConnected();
         } catch (SQLException e) {

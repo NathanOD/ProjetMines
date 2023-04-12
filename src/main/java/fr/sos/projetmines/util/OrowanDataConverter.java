@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -16,7 +17,7 @@ public class OrowanDataConverter {
     private static final String CSV_SPLITTER = ";";
     private static final Logger LOGGER = LoggerFactory.getLogger(OrowanDataConverter.class);
 
-    public OrowanDataConverter(String localInputFilePath, String outputFilePath) {
+    public OrowanDataConverter(String localInputFilePath, Path outputFilePath) {
         try {
             InputStream inputCsv = getClass().getClassLoader().getResourceAsStream(localInputFilePath);
             if (inputCsv == null) {
@@ -24,7 +25,7 @@ public class OrowanDataConverter {
                 return;
             }
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputCsv));
-            PrintWriter outputStream = new PrintWriter(new FileWriter(outputFilePath));
+            PrintWriter printWriter = new PrintWriter(new FileWriter(outputFilePath.toFile()));
 
             NumberFormat commaFormat = NumberFormat.getInstance(Locale.FRANCE);
             DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
@@ -32,26 +33,26 @@ public class OrowanDataConverter {
             DecimalFormat decimalFormat = new DecimalFormat("#0.000", otherSymbols);
 
             // Write the headers to the output file
-            outputStream.print("Cas\tHe\tHs\tTe\tTs\tDiam_WR\tWRyoung\toffset ini\tmu_ini\tForce\tG\n");
+            printWriter.print("Cas\tHe\tHs\tTe\tTs\tDiam_WR\tWRyoung\toffset ini\tmu_ini\tForce\tG\n");
+            int[] columns = new int[]{ 4, 5, 6, 7, 10, 12, 17, 15, 8, 9 };
 
             String line ;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] values = line.split(CSV_SPLITTER);
 
-                outputStream.print(values[0]);
-                outputStream.print('\t');
-                int[] columns = new int[]{ 4, 5, 6, 7, 10, 12, 17, 15, 8, 9 };
+                printWriter.print(values[0]);
+                printWriter.print('\t');
                 for (int i = 0; i < columns.length; i++) {
                     double number = commaFormat.parse(values[columns[i]].trim()).doubleValue();
-                    outputStream.print(decimalFormat.format(number));
+                    printWriter.print(decimalFormat.format(number));
                     if (i != columns.length - 1) {
-                        outputStream.print('\t');
+                        printWriter.print('\t');
                     } else {
-                        outputStream.println();
+                        printWriter.println();
                     }
                 }
             }
-            outputStream.close();
+            printWriter.close();
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();

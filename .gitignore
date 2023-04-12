@@ -42,4 +42,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+# Project specific files
 /src/main/resources/Orowan
+database-configuration.properties
