@@ -4,14 +4,22 @@ import fr.sos.projetmines.controller.OrowanController;
 import fr.sos.projetmines.util.OrowanDataConverter;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class MinesProject extends Application {
 
-    public static void main(String[] args) {
-        String workingDir = System.getProperty("user.dir");
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinesProject.class);
 
+    public static void main(String[] args) throws IOException {
         new OrowanDataConverter("./Orowan/Krakov/1939351_F2.txt",
-                workingDir + "/1939351_F2_output.txt");
+                Path.of(System.getProperty("user.dir"), "/1939351_F2_output.txt"));
+
         launch(args);
     }
 
