@@ -1,5 +1,6 @@
-package fr.sos.projetmines.controller;
+package fr.sos.projetmines.gui.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -21,5 +22,9 @@ public class LoginController {
         //Identifier : loginIdentifierField.getText()
         //Password : loginPasswordField.getText()
 
+    }
+
+    public void closeWindow(){
+        Platform.exit();
     }
 }

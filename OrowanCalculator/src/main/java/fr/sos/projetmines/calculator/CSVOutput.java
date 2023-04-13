@@ -1,4 +1,4 @@
-package fr.sos.projetmines.util;
+package fr.sos.projetmines.calculator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

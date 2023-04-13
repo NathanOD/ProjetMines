@@ -1,4 +1,4 @@
-package fr.sos.projetmines.util;
+package fr.sos.projetmines.calculator;
 
 
 import org.slf4j.Logger;
@@ -13,25 +13,25 @@ public class DatabaseConnection {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConnection.class);
     private static final DatabaseConnection INSTANCE = new DatabaseConnection();
+
     private Connection connection;
 
-
-    private String address, identifier, password;
-
+    private String address;
 
     public static DatabaseConnection getInstance() {
         return INSTANCE;
     }
 
-    public boolean configureConnection(String driver, String databaseAddress) {
+    public DatabaseConnection(){
         try {
-            Class.forName(driver);
+            Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
-            LOGGER.error("Driver \"{}\" not found!", driver);
-            return false;
+            LOGGER.error("H2 driver not found!");
         }
+    }
+
+    public void setDatabaseAddress(String databaseAddress) {
         this.address = databaseAddress;
-        return address != null && address.length() > 0;
     }
 
 
@@ -43,7 +43,7 @@ public class DatabaseConnection {
     public boolean connect(String identifier, String password) {
         assert address != null;
         try {
-            connection = DriverManager.getConnection(address, identifier, password);
+            connection = DriverManager.getConnection(address + "?reconnect=on", identifier, password);
             LOGGER.info("Connection to the database established");
             return isConnected();
         } catch (SQLException e) {

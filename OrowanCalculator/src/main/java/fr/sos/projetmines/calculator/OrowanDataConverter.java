@@ -1,4 +1,4 @@
-package fr.sos.projetmines.util;
+package fr.sos.projetmines.calculator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

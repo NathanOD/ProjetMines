@@ -1,63 +1,43 @@
-plugins {
-    id 'java'
-    id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
-}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
 
-group 'fr.sos.projetmines'
-version '1.0'
-description = "Projet Mines x ArcelorMittal - Orowan"
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
-javafx {
-    version = "19"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
-}
-
-shadowJar {
-    archiveBaseName.set('Mines-x-ArcelorMittal_Orowan')
-    archiveClassifier.set('')
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-
-    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
-    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
-
-    //Database drivers
-    implementation 'mysql:mysql-connector-java:8.0.32'
-    implementation 'org.postgresql:postgresql:42.6.0'
-    implementation 'com.oracle.database.jdbc:ojdbc11:21.9.0.0'
-    implementation 'com.h2database:h2:2.1.214'
-}
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'fr.sos.projetmines.MinesProject'
-        attributes 'Built-By': 'Steven HENRY, Nathan ODIC, SID\'AHMED Sidi'
+    repositories {
+        mavenCentral()
     }
-}
 
-application {
-    mainClass = 'fr.henrybounhar.calculatrice.Main'
-    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8']
-}
+    dependencies {
+        // LOGGER
+        implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+        implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+        implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+        //JUnit
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    }
 
-javadoc {
-    source = sourceSets.main.allJava
-}
+    jar {
+        manifest {
+            attributes 'Built-By': 'Steven HENRY, Nathan ODIC, SID\'AHMED Sidi'
+        }
+    }
+    application {
+        applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8']
+    }
 
-test {
-    useJUnitPlatform()
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    javadoc {
+        source = sourceSets.main.allJava
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }

@@ -1,0 +1,38 @@
+plugins {
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'fr.sos.projetmines.gui'
+version '1.0'
+description = "Projet Mines x ArcelorMittal - Orowan - GUI module"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // H2 Database driver
+    implementation 'com.h2database:h2:2.1.214'
+}
+
+javafx {
+    version = "19"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+shadowJar {
+    archiveBaseName.set('Mines-x-ArcelorMittal_Orowan_GUI')
+    archiveClassifier.set('')
+
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'fr.sos.projetmines.gui.OrowanGUI'
+    }
+}
+
+application {
+    mainClass = 'fr.sos.projetmines.gui.OrowanGUI'
+}

@@ -1,4 +1,4 @@
-package fr.sos.projetmines.model;
+package fr.sos.projetmines.gui.model;
 
 import java.util.UUID;
 
