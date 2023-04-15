@@ -4,22 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c70995-f1a2-4ca9-8ab9-078219889814" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="66c70995-f1a2-4ca9-8ab9-078219889814" name="Changes" comment="Updated InputSimulator:&#10;- Added data model classes (Strip and StripDataEntry that refers to the database tables)&#10;- Changed logger format&#10;- Added Database connection util file&#10;- Added a class containing and calling the main method (OrowanInputSimulator)">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/configuration-correct.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/configuration-wrong-keys.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/configuration-wrong-one-key.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/configuration-wrong-one-value.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/configuration-wrong-values.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/ConfigurationFilePathException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/OConcatenatedStringExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/OConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/OConfigurationExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/ODoubleExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/OIntExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/config/OStringExpectation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/test/java/ConfigurationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CommonUtils/src/test/resources/default-configuration.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/database_generation.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/sos/projetmines/CSVInput.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/sos/projetmines/CSVOutput.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/sos/projetmines/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommonUtils/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/CommonUtils/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
+    <list id="dd0a7515-1bc3-4e89-8b68-827ddf9527f1" name="Changes by hp" comment="" />
+    <list id="fcdc82d7-7801-4725-8a11-f6ada731a166" name="Changes by nathanodic" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -48,6 +64,7 @@
       <list>
         <option value="module-info" />
         <option value="FxmlFile" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -71,9 +88,9 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "C:/Developpement/Projets java/Projet Mines/ProjetMinesSOS/src/main/resources/bundles",
+    "last_opened_file_path": "C:/Developpement/Projets java/Projet Mines/ProjetMinesSOS/CommonUtils",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.49885058",
     "settings.editor.selected.configurable": "editing.templates",
@@ -82,19 +99,24 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Developpement\Projets java\Projet Mines\ProjetMinesSOS\CommonUtils" />
       <recent name="C:\Developpement\Projets java\Projet Mines\ProjetMinesSOS\src\main\resources\bundles" />
       <recent name="C:\Developpement\Projets java\Projet Mines\ProjetMinesSOS\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="fr.sos.projetmines.commonutils.config" />
       <recent name="fr.sos.projetmines" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="MinesProject" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="fr.sos.projetmines.MinesProject" />
-      <module name="ProjetMinesSOS.main" />
+  <component name="RunManager" selected="Gradle.ConfigurationTest">
+    <configuration name="OrowanGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="BUNDLED" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="fr.sos.projetmines.gui.OrowanGUI" />
+      <module name="ProjetMinesSOS.OrowanGUI.main" />
       <option name="PROGRAM_PARAMETERS" value="-Dfile.encoding=UTF-8" />
       <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/OrowanGUI" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="fr.sos.projetmines.controller.*" />
@@ -105,9 +127,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ConfigurationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":CommonUtils:test" />
+            <option value="--tests" />
+            <option value="&quot;ConfigurationTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ProjetMinesSOS.OrowanGUI.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ProjetMinesSOS.OrowanGUI.main" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.OrowanGUI" />
+      <item itemvalue="Gradle.ConfigurationTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MinesProject" />
+        <item itemvalue="Gradle.ConfigurationTest" />
+        <item itemvalue="Application.OrowanGUI" />
       </list>
     </recent_temporary>
   </component>
@@ -123,6 +186,84 @@
       <workItem from="1681144026646" duration="10592000" />
       <workItem from="1681154687556" duration="11744000" />
     </task>
+    <task id="LOCAL-00001" summary="Updated GUI:&#10;- Added 3 scenes (Worker, admin and time series)&#10;- Added an address field to the login scene (with its translations)">
+      <created>1681572992882</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681572992882</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updated GUI:&#10;- Added 3 scenes (Worker, admin and time series)&#10;- Added an address field to the login scene (with its translations)&#10;- Updated the logger format">
+      <created>1681573033717</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573033717</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated GUI:&#10;- Added RPC Support (Two services implemented: authentication + livedata)&#10;TODO: Show received livedata">
+      <created>1681573116511</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573116511</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated gRPC protocols: created .proto files:&#10;- EventNotifier: Notifies the Calculator that a new entry is processable&#10;- OrowanAuthenticator: Authenticates the GUI User&#10;- OrowanLiveDataProvider: Continuously provides the data to the GUI clients as stream&#10;- StandManagement: Manages the stands when the GUI User is admin&#10;- UserManagement: Manages the users (add, delete, promote) when the GUI user is admin">
+      <created>1681573344456</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573344456</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated DatabaseNotifier:&#10;- Created a main file (Will be removed for deployment)&#10;- Created the Database trigger (class called when the database trigger is called)&#10;- Updated the logger format">
+      <created>1681573481025</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573481025</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated DatabaseNotifier:&#10;- Created an RPC Server configured by the configuration file.">
+      <created>1681573505307</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573505307</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated Calculator:&#10;- Deleted unused files&#10;- Updated logger format">
+      <created>1681573629330</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573629330</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Updated Calculator:&#10;- Added data process pipeline&#10;- Linked the pipeline parts">
+      <created>1681573730990</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573730990</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated Calculator:&#10;- Added RPC support (GUI User request + DatabaseNotifier events)">
+      <created>1681573861089</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573861089</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated Calculator:&#10;- Updated main method to call the different services (RPC, data processor)&#10;- Updated configuration and database communcation file">
+      <created>1681573933294</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681573933294</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Updated InputSimulator:&#10;- Added data model classes (Strip and StripDataEntry that refers to the database tables)&#10;- Changed logger format&#10;- Added Database connection util file&#10;- Added a class containing and calling the main method (OrowanInputSimulator)">
+      <created>1681574071723</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681574071723</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +279,20 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updated GUI:&#10;- Added 3 scenes (Worker, admin and time series)&#10;- Added an address field to the login scene (with its translations)" />
+    <MESSAGE value="Updated GUI:&#10;- Added 3 scenes (Worker, admin and time series)&#10;- Added an address field to the login scene (with its translations)&#10;- Updated the logger format" />
+    <MESSAGE value="Updated GUI:&#10;- Added RPC Support (Two services implemented: authentication + livedata)&#10;TODO: Show received livedata" />
+    <MESSAGE value="Updated gRPC protocols: created .proto files:&#10;- EventNotifier: Notifies the Calculator that a new entry is processable&#10;- OrowanAuthenticator: Authenticates the GUI User&#10;- OrowanLiveDataProvider: Continuously provides the data to the GUI clients as stream&#10;- StandManagement: Manages the stands when the GUI User is admin&#10;- UserManagement: Manages the users (add, delete, promote) when the GUI user is admin" />
+    <MESSAGE value="Updated DatabaseNotifier:&#10;- Created a main file (Will be removed for deployment)&#10;- Created the Database trigger (class called when the database trigger is called)&#10;- Updated the logger format" />
+    <MESSAGE value="Updated DatabaseNotifier:&#10;- Created an RPC Server configured by the configuration file." />
+    <MESSAGE value="Updated Calculator:&#10;- Deleted unused files&#10;- Updated logger format" />
+    <MESSAGE value="Updated Calculator:&#10;- Added data process pipeline&#10;- Linked the pipeline parts" />
+    <MESSAGE value="Updated Calculator:&#10;- Added RPC support (GUI User request + DatabaseNotifier events)" />
+    <MESSAGE value="Updated Calculator:&#10;- Updated main method to call the different services (RPC, data processor)&#10;- Updated configuration and database communcation file" />
+    <MESSAGE value="Updated InputSimulator:&#10;- Added data model classes (Strip and StripDataEntry that refers to the database tables)&#10;- Changed logger format&#10;- Added Database connection util file&#10;- Added a class containing and calling the main method (OrowanInputSimulator)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated InputSimulator:&#10;- Added data model classes (Strip and StripDataEntry that refers to the database tables)&#10;- Changed logger format&#10;- Added Database connection util file&#10;- Added a class containing and calling the main method (OrowanInputSimulator)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
