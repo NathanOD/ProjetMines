@@ -9,8 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CommonUtils" />
+            <option value="$PROJECT_DIR$/DatabaseNotifier" />
             <option value="$PROJECT_DIR$/OrowanCalculator" />
             <option value="$PROJECT_DIR$/OrowanGUI" />
+            <option value="$PROJECT_DIR$/OrowanInputSimulator" />
           </set>
         </option>
       </GradleProjectSettings>

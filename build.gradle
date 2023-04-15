@@ -1,9 +1,22 @@
+buildscript {
+    repositories {
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.2'
+        classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
+    }
+}
+
 subprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'java'
     apply plugin: 'application'
 
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 14
+    targetCompatibility = 14
 
     repositories {
         mavenCentral()
@@ -20,6 +33,13 @@ subprojects {
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     }
 
+    //Shadow
+    shadowJar {
+        archiveBaseName.set('Mines-x-ArcelorMittal_Orowan')
+        //archiveName.set("${archiveBaseName}_${archiveClassifier}_${archiveVersion}.${archiveExtension}")
+    }
+
+    // JAR Generation
     jar {
         manifest {
             attributes 'Built-By': 'Steven HENRY, Nathan ODIC, SID\'AHMED Sidi'
@@ -37,6 +57,7 @@ subprojects {
         source = sourceSets.main.allJava
     }
 
+    // Tests
     test {
         useJUnitPlatform()
     }

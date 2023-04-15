@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'fr.sos.projetmines.commonutils'
+version '1.0'
+description = 'Util module including commonly used classes (such as configuration and database)'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // H2 Database driver
+    implementation 'com.h2database:h2:2.1.214'
+}
+
+test {
+    useJUnitPlatform()
+}
