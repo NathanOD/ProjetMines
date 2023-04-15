@@ -12,12 +12,12 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class OConfiguration {
+public class Configuration {
 
     /**
      * OConfiguration default logger
      */
-    private final static Logger LOGGER = Logger.getLogger(OConfiguration.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(Configuration.class.getName());
 
     /**
      * Path of the configuration file
@@ -33,7 +33,7 @@ public class OConfiguration {
     /**
      * Set of the values constraints
      */
-    private final Set<OConfigurationExpectation> expectedValues;
+    private final Set<ConfigurationExpectation> expectedValues;
 
     /**
      * Loaded configuration (initialized by the {@link #loadConfiguration()} method
@@ -46,8 +46,8 @@ public class OConfiguration {
      * @param expectedValues               Expected configurations for the keys
      * @throws ConfigurationFilePathException when a path is misconfigured
      */
-    public OConfiguration(Path configurationFilePath, String defaultConfigurationFilePath,
-                          OConfigurationExpectation... expectedValues) throws ConfigurationFilePathException {
+    public Configuration(Path configurationFilePath, String defaultConfigurationFilePath,
+                         ConfigurationExpectation... expectedValues) throws ConfigurationFilePathException {
         this(configurationFilePath, defaultConfigurationFilePath, Set.of(expectedValues));
     }
 
@@ -57,8 +57,8 @@ public class OConfiguration {
      * @param expectedValues               Expected configurations for the keys
      * @throws ConfigurationFilePathException when a path is misconfigured
      */
-    public OConfiguration(Path configurationFilePath, String defaultConfigurationFilePath,
-                          Set<OConfigurationExpectation> expectedValues) throws ConfigurationFilePathException {
+    public Configuration(Path configurationFilePath, String defaultConfigurationFilePath,
+                         Set<ConfigurationExpectation> expectedValues) throws ConfigurationFilePathException {
         this.configurationFilePath = configurationFilePath;
         if (configurationFilePath == null) {
             throw new ConfigurationFilePathException(true);
@@ -124,9 +124,9 @@ public class OConfiguration {
     private boolean validateKeys() {
         assert config != null;
         boolean isValid = true;
-        for (OConfigurationExpectation expectation : expectedValues) {
+        for (ConfigurationExpectation expectation : expectedValues) {
             String value;
-            if (expectation instanceof OConcatenatedStringExpectation) {
+            if (expectation instanceof ConcatenatedStringExpectation) {
                 value = getConcatenatedValue(expectation.getKeyName().split("\\+"));
             } else {
                 value = config.getProperty(expectation.getKeyName(), null);
@@ -145,7 +145,7 @@ public class OConfiguration {
      * @throws IOException when the file could not be generated
      */
     private void copyDefaultConfiguration() throws IOException {
-        InputStream databaseDefaultConfig = OConfiguration.class.getClassLoader()
+        InputStream databaseDefaultConfig = Configuration.class.getClassLoader()
                 .getResourceAsStream(defaultConfigurationFilePath.toString());
         assert databaseDefaultConfig != null;
         Files.copy(databaseDefaultConfig, configurationFilePath, StandardCopyOption.REPLACE_EXISTING);

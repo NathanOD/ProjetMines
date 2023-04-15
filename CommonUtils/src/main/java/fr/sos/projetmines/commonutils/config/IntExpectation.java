@@ -1,6 +1,6 @@
 package fr.sos.projetmines.commonutils.config;
 
-public class OIntExpectation extends OConfigurationExpectation {
+public class IntExpectation extends ConfigurationExpectation {
 
 
     /**
@@ -18,7 +18,7 @@ public class OIntExpectation extends OConfigurationExpectation {
      * @param minimalValue minimal acceptable value. Set {@link Integer#MIN_VALUE} to remove the constraint
      * @param maximalValue maximal acceptable value. Set {@link Integer#MAX_VALUE} to remove the constraint
      */
-    public OIntExpectation(String keyName, int minimalValue, int maximalValue) {
+    public IntExpectation(String keyName, int minimalValue, int maximalValue) {
         super(keyName);
         this.minimalValue = minimalValue;
         this.maximalValue = maximalValue;

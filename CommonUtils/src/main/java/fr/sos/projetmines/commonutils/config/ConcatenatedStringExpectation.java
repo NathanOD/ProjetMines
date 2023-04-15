@@ -1,6 +1,6 @@
 package fr.sos.projetmines.commonutils.config;
 
-public class OConcatenatedStringExpectation extends OStringExpectation {
+public class ConcatenatedStringExpectation extends StringExpectation {
 
 
     /**
@@ -8,7 +8,7 @@ public class OConcatenatedStringExpectation extends OStringExpectation {
      * @param maximalLength maximal acceptable concatenated string length. Set 0 to remove the constraint
      * @param keyNames      names of the configuration keys to concatenate
      */
-    public OConcatenatedStringExpectation(int minimalLength, int maximalLength, String... keyNames) {
+    public ConcatenatedStringExpectation(int minimalLength, int maximalLength, String... keyNames) {
         super(String.join("+", keyNames), minimalLength, maximalLength);
     }
 

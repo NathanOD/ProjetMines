@@ -1,6 +1,6 @@
 package fr.sos.projetmines.commonutils.config;
 
-public class OStringExpectation extends OConfigurationExpectation{
+public class StringExpectation extends ConfigurationExpectation {
 
     /**
      * Minimal length of the string
@@ -17,7 +17,7 @@ public class OStringExpectation extends OConfigurationExpectation{
      * @param minimalLength minimal acceptable string length. Set 0 to remove the constraint
      * @param maximalLength maximal acceptable string length. Set 0 to remove the constraint
      */
-    public OStringExpectation(String keyName, int minimalLength, int maximalLength) {
+    public StringExpectation(String keyName, int minimalLength, int maximalLength) {
         super(keyName);
         this.minimalLength = minimalLength;
         this.maximalLength = maximalLength <= 0 ? Integer.MAX_VALUE : maximalLength;

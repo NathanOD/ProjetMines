@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -17,15 +16,15 @@ public class ConfigurationTest {
 
     private static final Logger LOGGER = Logger.getLogger(ConfigurationTest.class.getName());
 
-    private Set<OConfigurationExpectation> generateExpectations() {
-        Set<OConfigurationExpectation> expectations = new HashSet<>();
-        expectations.add(new OStringExpectation("myString", 2, 4));
-        expectations.add(new OStringExpectation("mySecondString", 0, 0));
-        expectations.add(new OConcatenatedStringExpectation(2, 4, "myString", "mySecondString"));
-        expectations.add(new OIntExpectation("myInt", 0, 20));
-        expectations.add(new OIntExpectation("mySecondInt", -20, 0));
-        expectations.add(new OIntExpectation("myThirdInt", Integer.MIN_VALUE, Integer.MAX_VALUE));
-        expectations.add(new ODoubleExpectation("myDouble", 7.2, 27.4));
+    private Set<ConfigurationExpectation> generateExpectations() {
+        Set<ConfigurationExpectation> expectations = new HashSet<>();
+        expectations.add(new StringExpectation("myString", 2, 4));
+        expectations.add(new StringExpectation("mySecondString", 0, 0));
+        expectations.add(new ConcatenatedStringExpectation(2, 4, "myString", "mySecondString"));
+        expectations.add(new IntExpectation("myInt", 0, 20));
+        expectations.add(new IntExpectation("mySecondInt", -20, 0));
+        expectations.add(new IntExpectation("myThirdInt", Integer.MIN_VALUE, Integer.MAX_VALUE));
+        expectations.add(new DoubleExpectation("myDouble", 7.2, 27.4));
         return expectations;
     }
 
@@ -35,9 +34,9 @@ public class ConfigurationTest {
         LOGGER.info("---- TEST testCorrect ----");
         Path configPath = Path.of(System.getProperty("user.dir"), "configuration-correct.properties");
         String defaultConfigPath = "default-configuration.properties";
-        AtomicReference<OConfiguration> config = new AtomicReference<>();
+        AtomicReference<Configuration> config = new AtomicReference<>();
         Assertions.assertDoesNotThrow(() ->
-                config.set(new OConfiguration(configPath, defaultConfigPath, generateExpectations())));
+                config.set(new Configuration(configPath, defaultConfigPath, generateExpectations())));
         try {
             Assertions.assertTrue(config.get().validateConfiguration());
         } catch (IOException exception) {
@@ -51,7 +50,7 @@ public class ConfigurationTest {
         LOGGER.info("---- TEST testWrongPath ----");
         String defaultConfigPath = "default-configuration.properties";
         Assertions.assertThrows(ConfigurationFilePathException.class,
-                () -> new OConfiguration(null, defaultConfigPath, generateExpectations()));
+                () -> new Configuration(null, defaultConfigPath, generateExpectations()));
         LOGGER.info("-- TEST testWrongPath end --");
     }
 
@@ -62,7 +61,7 @@ public class ConfigurationTest {
         Path configPath = Path.of(System.getProperty("user.dir"), "configuration-correct.properties");
         String defaultConfigPath = "";
         Assertions.assertThrows(ConfigurationFilePathException.class,
-                () -> new OConfiguration(configPath, defaultConfigPath, generateExpectations()));
+                () -> new Configuration(configPath, defaultConfigPath, generateExpectations()));
         LOGGER.info("-- TEST testWrongDefaultPath end --");
     }
 
@@ -71,9 +70,9 @@ public class ConfigurationTest {
         LOGGER.info("---- TEST testNonExisting ----");
         Path configPath = Path.of(System.getProperty("user.dir"), "non-existing-config.properties");
         String defaultConfigPath = "default-configuration.properties";
-        AtomicReference<OConfiguration> config = new AtomicReference<>();
+        AtomicReference<Configuration> config = new AtomicReference<>();
         Assertions.assertDoesNotThrow(() ->
-                config.set(new OConfiguration(configPath, defaultConfigPath, generateExpectations())));
+                config.set(new Configuration(configPath, defaultConfigPath, generateExpectations())));
         try {
             Assertions.assertFalse(config.get().validateConfiguration());
         } catch (IOException exception) {
@@ -117,9 +116,9 @@ public class ConfigurationTest {
     private void testWrongConfig(String fileName) throws IOException{
         Path configPath = Path.of(System.getProperty("user.dir"), fileName);
         String defaultConfigPath = "default-configuration.properties";
-        AtomicReference<OConfiguration> config = new AtomicReference<>();
+        AtomicReference<Configuration> config = new AtomicReference<>();
         Assertions.assertDoesNotThrow(() ->
-                config.set(new OConfiguration(configPath, defaultConfigPath, generateExpectations())));
+                config.set(new Configuration(configPath, defaultConfigPath, generateExpectations())));
         try {
             Assertions.assertFalse(config.get().validateConfiguration());
         } catch (IOException exception) {

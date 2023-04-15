@@ -1,6 +1,6 @@
 package fr.sos.projetmines.commonutils.config;
 
-public abstract class OConfigurationExpectation {
+public abstract class ConfigurationExpectation {
 
     /**
      * Configured key name
@@ -10,7 +10,7 @@ public abstract class OConfigurationExpectation {
     /**
      * @param key name of the key
      */
-    protected OConfigurationExpectation(String key) {
+    protected ConfigurationExpectation(String key) {
         this.keyName = key;
     }
 
