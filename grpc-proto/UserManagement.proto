@@ -1,0 +1,65 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+import "OrowanAuthenticator.proto";
+
+message OrowanNewUserCredentials {
+  string username = 1;
+  string password = 2;
+  Job job = 3;
+}
+
+message UserCreationResult {
+  enum CreationResult {
+    CREATION_SUCCESSFUL = 0;
+    CREATION_FAILED = 1;
+  }
+
+  CreationResult result = 1;
+}
+
+message OrowanDeletedUserCredentials {
+  string username = 1;
+}
+
+
+message UserDeleteResult {
+  enum DeleteResult {
+    DELETE_SUCCESSFUL = 0;
+    DELETE_FAILED = 1;
+  }
+  DeleteResult result = 1;
+}
+
+message OrowanNewAdminCredentials {
+  string username = 1;
+}
+
+message NewAdminResult {
+  enum AdminResult {
+    ADMIN_SUCCESSFUL = 0;
+    ADMIN_FAILED = 1;
+  }
+  AdminResult result = 1;
+}
+
+message OrowanNewWorkerCredentials {
+  string username = 1;
+}
+
+
+message NewWorkerResult {
+  enum WorkerResult {
+    WORKER_SUCCESSFUL = 0;
+    WORKER_FAILED = 1;
+  }
+  WorkerResult result = 1;
+}
+
+service UserManagement {
+  rpc CreateUser (OrowanNewUserCredentials) returns (UserCreationResult);
+  rpc DeleteUser (OrowanDeletedUserCredentials) returns (UserDeleteResult);
+  rpc NewAdmin (OrowanNewAdminCredentials) returns (NewAdminResult);
+  rpc NewWorker (OrowanNewWorkerCredentials) returns (NewWorkerResult);
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+/*
+  Input message containing the Stand ID
+*/
+message StandIdentifier {
+  int32 stand_id = 1;
+}
+
+/*
+  Result data to show on the curve
+*/
+message CurvePoint {
+  float friction_coefficient = 1;
+  float roll_speed = 2;
+  float sigma = 3;
+  uint64 computation_time = 4;
+}
+
+message FrictionCoefficient {
+  float friction_coefficient = 1;
+}
+
+
+service OrowanLiveDataProvider {
+  rpc CurvesData (StandIdentifier) returns (stream CurvePoint) {}
+  rpc AverageFrictionCoefficient (StandIdentifier) returns (stream FrictionCoefficient) {}
+}

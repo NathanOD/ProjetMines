@@ -1,0 +1,27 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+message OrowanUserCredentials {
+  string username = 1;
+  string password = 2;
+}
+
+enum ConnectionResult {
+  LOGIN_SUCCESSFUL = 0;
+  WRONG_CREDENTIALS = 1;
+}
+
+enum Job {
+  WORKER = 0;
+  PROCESS_ENGINEER = 1;
+}
+
+message OrowanConnectionResult {
+  ConnectionResult result = 1;
+  Job user_job = 2;
+}
+
+service OrowanAuthenticator {
+  rpc AuthenticateUser (OrowanUserCredentials) returns (OrowanConnectionResult);
+}
