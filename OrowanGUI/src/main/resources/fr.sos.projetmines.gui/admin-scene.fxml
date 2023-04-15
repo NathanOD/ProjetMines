@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Disconnect" />
+                        <MenuItem mnemonicParsing="false" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label style="-fx-translate-x: 90; -fx-translate-y: 10;" text="Supprimer un utilisateur" textAlignment="CENTER" />
+                <ChoiceBox prefWidth="150.0" style="-fx-translate-x: 80; -fx-translate-y: 15;" />
+                <Button mnemonicParsing="false" style="-fx-translate-x: 115; -fx-translate-y: 20;" text="Delete User" />
+                <Button layoutX="10.0" layoutY="53.0" mnemonicParsing="false" style="-fx-translate-x: 70; -fx-translate-y: 25;" text="Set Admin" />
+                <Button layoutX="10.0" layoutY="79.0" mnemonicParsing="false" style="-fx-translate-x: 162; -fx-translate-y: -1;" text="Set Worker" />
+                <Label layoutX="10.0" layoutY="10.0" style="-fx-translate-x: 400; -fx-translate-y: -110;" text="Ajouter un Utilisateur" textAlignment="CENTER" />
+                <TextField alignment="CENTER" promptText="username" style="-fx-max-width: 200; -fx-translate-x: 360; -fx-translate-y: -108;" />
+                <TextField alignment="CENTER" layoutX="10.0" layoutY="76.0" promptText="password" style="-fx-max-width: 200; -fx-translate-x: 360; -fx-translate-y: -103;" />
+                <Button layoutX="10.0" layoutY="53.0" mnemonicParsing="false" style="-fx-translate-x: 430; -fx-translate-y: -98;" text="Add User" />
+                <Label layoutX="10.0" layoutY="10.0" style="-fx-translate-x: 110; -fx-translate-y: 0;" text="Liste des Stands" textAlignment="CENTER" />
+                <ChoiceBox layoutX="10.0" layoutY="27.0" prefWidth="150.0" style="-fx-translate-x: 80; -fx-translate-y: 10;" />
+                <Button layoutX="10.0" layoutY="105.0" mnemonicParsing="false" style="-fx-translate-x: 112; -fx-translate-y: 20;" text="Delete Stand" />
+                <Button layoutX="10.0" layoutY="269.0" mnemonicParsing="false" style="-fx-translate-x: 118; -fx-translate-y: 30;" text="Add Stand" />
+                <Label layoutX="10.0" layoutY="226.0" style="-fx-translate-x: 410; -fx-translate-y: -96;" text="New Level 2 Input" textAlignment="CENTER" />
+                <Button layoutX="10.0" layoutY="295.0" mnemonicParsing="false" style="-fx-translate-x: 424; -fx-translate-y: -60;" text="Select File" />
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
+

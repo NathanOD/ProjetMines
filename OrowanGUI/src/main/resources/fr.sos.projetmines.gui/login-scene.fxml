@@ -25,7 +25,14 @@
       <VBox fx:id="loginContent" accessibleHelp="Division that holds the identifier's label and field" accessibleText="Main content div" alignment="CENTER" cache="true" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="loginTitle" text="%ui.login.title" />
-            <VBox fx:id="loginIdentifierBox" accessibleHelp="Division that holds the identifier's label and field" accessibleText="Identifier's division" maxHeight="-Infinity" prefHeight="0.0" prefWidth="0.0">
+             <VBox fx:id="hostBox" accessibleHelp="Division that holds the host label and field " accessibleText="host division " maxHeight="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                 <children>
+                     <Label fx:id="hostLabel" text="%ui.login.host.label" />
+                     <TextField fx:id="hostField" text="localhost:32765" />
+                 </children>
+             </VBox>
+
+             <VBox fx:id="loginIdentifierBox" accessibleHelp="Division that holds the identifier's label and field" accessibleText="Identifier's division" maxHeight="-Infinity" prefHeight="0.0" prefWidth="0.0">
                <children>
                   <Label fx:id="loginIdentifierLabel" text="%ui.login.identifier.label" />
                   <TextField fx:id="loginIdentifierField" />
