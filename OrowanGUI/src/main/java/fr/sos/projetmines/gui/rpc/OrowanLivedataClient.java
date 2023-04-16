@@ -20,12 +20,6 @@ public class OrowanLivedataClient {
     private final Channel channel;
     public  List<CurvePoint> curvePoints = new ArrayList<>();
 
-    public OrowanLivedataClient(List<CurvePoint> curvePoints) {
-        this.curvePoints = curvePoints;
-        this.client = null;
-        this.channel = null;
-    }
-
     public OrowanLivedataClient(Channel channel) {
         this.channel = channel;
         client = OrowanLiveDataProviderGrpc.newStub(channel);

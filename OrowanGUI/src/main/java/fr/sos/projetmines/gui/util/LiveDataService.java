@@ -1,11 +1,5 @@
 package fr.sos.projetmines.gui.util;
 
-import com.sun.jdi.VoidType;
-import fr.sos.projetmines.ConnectionResult;
-import fr.sos.projetmines.Job;
-import fr.sos.projetmines.OrowanConnectionResult;
-import fr.sos.projetmines.OrowanLiveDataProviderGrpc;
-import fr.sos.projetmines.gui.rpc.OrowanAuthenticatorClient;
 import fr.sos.projetmines.gui.rpc.OrowanLivedataClient;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
@@ -16,16 +10,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+public class LiveDataService extends Service {
 
-public class LivedataService extends Service {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LivedataService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LiveDataService.class);
     private final StringProperty host = new SimpleStringProperty("localhost");
 
     public String getHost() {

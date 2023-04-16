@@ -93,7 +93,7 @@ public class CalculatorClientService extends Service<Job> {
                     Optional<OrowanConnectionResult> resultOpt = client.sendConnectionRequest(getUsername(), getPassword());
                     if (resultOpt.isPresent() && resultOpt.get().getResult() == ConnectionResult.LOGIN_SUCCESSFUL) {
                         Platform.runLater(() -> {
-                            LivedataService service = new LivedataService();
+                            LiveDataService service = new LiveDataService();
                             service.setHost(getHost());
                             service.setPort(getPort()+1);
                             service.start();

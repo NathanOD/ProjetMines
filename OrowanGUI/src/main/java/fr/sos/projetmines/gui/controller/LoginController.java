@@ -13,6 +13,22 @@ public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
+    private final CalculatorClientService service;
+
+    public LoginController(){
+        service = new CalculatorClientService();
+        service.setOnSucceeded(event -> {
+            Job result = (Job) event.getSource().getValue();
+            if (result == Job.PROCESS_ENGINEER) {
+                OrowanController.getInstance().showProcessEngineerScene();
+            } else {
+                OrowanController.getInstance().showWorkerScene();
+            }
+            LOGGER.info("Authentication succeeded as a {}.", result.name());
+        });
+        service.setOnFailed(event -> LOGGER.info("Authentication failed."));
+    }
+
     @FXML
     private TextField hostField;
 
@@ -36,22 +52,22 @@ public class LoginController {
                 LOGGER.info("Port malformed! Please enter an integer.");
                 return;
             }
-            CalculatorClientService service = new CalculatorClientService();
+
+            if(identifier.length() == 0){
+                LOGGER.info("Username cannot be empty!");
+                return;
+            }
+
             service.setUsername(identifier);
             service.setPassword(password);
             service.setHost(host);
             service.setPort(port);
-            service.start();
-            service.setOnSucceeded(event -> {
-                Job result = (Job) event.getSource().getValue();
-                if (result == Job.PROCESS_ENGINEER) {
-                    OrowanController.getInstance().showProcessEngineerScene();
-                } else {
-                    OrowanController.getInstance().showWorkerScene();
-                }
-            });
+
+            service.restart();
+            LOGGER.info("Sent authentication request.");
+
         } else {
-            LOGGER.info("Address malformed! Please enter an adress in this format: \"host:port\".");
+            LOGGER.info("Address malformed! Please enter an address in this format: \"host:port\".");
         }
     }
 
