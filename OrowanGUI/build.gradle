@@ -27,11 +27,9 @@ repositories {
 }
 
 dependencies {
-    //gRPC client
-    implementation "io.grpc:grpc-stub:${project.ext.get('grpcVersion')}"
-
     //gRPC
     implementation "io.grpc:grpc-protobuf:${project.ext.get('grpcVersion')}"
+    implementation "io.grpc:grpc-stub:${project.ext.get('grpcVersion')}"
     //implementation "io.grpc:grpc-netty:${project.ext.get('grpcVersion')}"
     implementation "io.grpc:grpc-netty:${project.ext.get('grpcVersion')}"
     //Conflicts in package finding for module generation forced to merge grcp-api and grcp-context files
