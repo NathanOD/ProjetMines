@@ -1,15 +1,15 @@
 package fr.sos.projetmines.commonutils.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.Set;
-import java.util.logging.Logger;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Configuration {
@@ -17,7 +17,7 @@ public class Configuration {
     /**
      * OConfiguration default logger
      */
-    private final static Logger LOGGER = Logger.getLogger(Configuration.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
     /**
      * Path of the configuration file
@@ -150,8 +150,8 @@ public class Configuration {
         assert databaseDefaultConfig != null;
         Files.copy(databaseDefaultConfig, configurationFilePath, StandardCopyOption.REPLACE_EXISTING);
         databaseDefaultConfig.close();
-        LOGGER.info(String.format("Generated the default configuration in \"%s\" file!",
-                configurationFilePath.getFileName().toString()));
+        LOGGER.info("Generated the default configuration in \"{}\" file!",
+                configurationFilePath.getFileName().toString());
         LOGGER.info("Please edit this file before restarting this app!");
     }
 
@@ -172,7 +172,7 @@ public class Configuration {
         } while (cwd.resolve(backupFileName).toFile().exists());
 
         Files.copy(configurationFilePath, cwd.resolve(backupFileName));
-        LOGGER.info(String.format("Saved the malformed configuration into \"%s\"", backupFileName));
+        LOGGER.info("Saved the malformed configuration into \"{}\"", backupFileName);
     }
 
     /**
@@ -194,8 +194,11 @@ public class Configuration {
      */
     public String getConcatenatedValue(String... keys) {
         assert config != null;
-        return String.join("", Arrays.stream(keys)
-                .map(key -> config.getProperty(key, null)).collect(Collectors.toSet()));
+        List<String> values = new ArrayList<>();
+        for(String key : keys){
+            values.add(config.getProperty(key, null));
+        }
+        return String.join("", values);
     }
 
     /**

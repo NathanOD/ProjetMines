@@ -1,16 +1,16 @@
 package fr.sos.projetmines.commonutils.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
-import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class DatabaseConnection {
 
     /**
      * Logger for the database connection
      */
-    private static final Logger LOGGER = Logger.getLogger(DatabaseConnection.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConnection.class);
 
     /**
      * Connection to the database, instantiated when the {@link #connect()} method is called and succeed
@@ -36,7 +36,7 @@ public abstract class DatabaseConnection {
         try {
             Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "H2 driver not found!");
+            LOGGER.error("H2 driver not found!");
         }
         this.address = address;
         this.username = username;
@@ -51,10 +51,10 @@ public abstract class DatabaseConnection {
         assert address != null && username != null && password != null;
         try {
             connection = DriverManager.getConnection(address, username, password);
-            LOGGER.info("Connection to the database established");
+            LOGGER.info("Connection to the database established!");
             return isConnected();
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Connection to the database cannot be established! ({})", e.getMessage());
+            LOGGER.error("Connection to the database cannot be established! ({})", e.getMessage());
             return false;
         }
     }
@@ -81,5 +81,9 @@ public abstract class DatabaseConnection {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

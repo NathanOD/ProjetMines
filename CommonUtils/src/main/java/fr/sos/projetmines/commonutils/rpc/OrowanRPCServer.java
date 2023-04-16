@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class OrowanRPCServer<T extends Grpc> {
+public class OrowanRPCServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrowanRPCServer.class);
 
