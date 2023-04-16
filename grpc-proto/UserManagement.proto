@@ -4,62 +4,33 @@ option java_multiple_files = true;
 
 import "OrowanAuthenticator.proto";
 
-message OrowanNewUserCredentials {
+message UserCreationRequest {
   string username = 1;
   string password = 2;
   Job job = 3;
 }
 
-message UserCreationResult {
-  enum CreationResult {
-    CREATION_SUCCESSFUL = 0;
-    CREATION_FAILED = 1;
-  }
-
-  CreationResult result = 1;
-}
-
-message OrowanDeletedUserCredentials {
+message UserDeletionRequest {
   string username = 1;
 }
 
-
-message UserDeleteResult {
-  enum DeleteResult {
-    DELETE_SUCCESSFUL = 0;
-    DELETE_FAILED = 1;
-  }
-  DeleteResult result = 1;
-}
-
-message OrowanNewAdminCredentials {
+message UserJobUpdateRequest {
   string username = 1;
+  Job job = 2;
 }
 
-message NewAdminResult {
-  enum AdminResult {
-    ADMIN_SUCCESSFUL = 0;
-    ADMIN_FAILED = 1;
-  }
-  AdminResult result = 1;
+enum OperationResult {
+  SUCCESSFUL = 0;
+  FAIL = 1;
 }
 
-message OrowanNewWorkerCredentials {
-  string username = 1;
+message UserOperationResult {
+    OperationResult result = 1;
 }
 
-
-message NewWorkerResult {
-  enum WorkerResult {
-    WORKER_SUCCESSFUL = 0;
-    WORKER_FAILED = 1;
-  }
-  WorkerResult result = 1;
-}
 
 service UserManagement {
-  rpc CreateUser (OrowanNewUserCredentials) returns (UserCreationResult);
-  rpc DeleteUser (OrowanDeletedUserCredentials) returns (UserDeleteResult);
-  rpc NewAdmin (OrowanNewAdminCredentials) returns (NewAdminResult);
-  rpc NewWorker (OrowanNewWorkerCredentials) returns (NewWorkerResult);
+  rpc CreateUser (UserCreationRequest) returns (UserOperationResult);
+  rpc DeleteUser (UserDeletionRequest) returns (UserOperationResult);
+  rpc SetUserJob (UserJobUpdateRequest) returns (UserOperationResult);
 }

@@ -1,7 +1,8 @@
 package fr.sos.projetmines.calculator.rpc;
 
 import fr.sos.projetmines.*;
-import fr.sos.projetmines.calculator.util.CalculatorDatabaseConnection;
+import fr.sos.projetmines.calculator.OrowanCalculator;
+import fr.sos.projetmines.calculator.database.CalculatorDatabaseFacade;
 import fr.sos.projetmines.calculator.util.DataFormatter;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
@@ -10,86 +11,52 @@ import org.slf4j.LoggerFactory;
 
 public class UserManagementService extends UserManagementGrpc.UserManagementImplBase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementService.class);
+    private final CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
 
     @Override
-    public void createUser(OrowanNewUserCredentials request, StreamObserver<UserCreationResult> responseObserver) {
-        String providedUsername = request.getUsername();
-        String providedPassword = request.getPassword();
-        Job providedJob = request.getJob();
+    public void createUser(UserCreationRequest request, StreamObserver<UserOperationResult> responseObserver) {
         byte[] salt = DataFormatter.generateSalt();
-        byte[] passwordHash = DataFormatter.hashPassword(providedPassword, salt);
+        byte[] passwordHash = DataFormatter.hashPassword(request.getPassword(), salt);
 
-        CalculatorDatabaseConnection database = CalculatorDatabaseConnection.getInstance();
-        if (!database.checkUserExistance(providedUsername)) {
-            database.addUser(providedUsername, passwordHash, salt, providedJob);
-            UserCreationResult result = UserCreationResult.newBuilder()
-                    .setResult(UserCreationResult.CreationResult.CREATION_SUCCESSFUL).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+        UserOperationResult result = null;
+        if (!database.checkUserExistence(request.getUsername())) {
+            //If the user does not already exist then creates
+            database.addUser(request.getUsername(), passwordHash, salt, request.getJob());
+            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         } else {
-            UserCreationResult result = UserCreationResult.newBuilder()
-                    .setResult(UserCreationResult.CreationResult.CREATION_FAILED).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+            //If the user is already registered
+            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         }
-    }
-
-
-    @Override
-    public void deleteUser(OrowanDeletedUserCredentials request, StreamObserver<UserDeleteResult> responseObserver) {
-        String providedUsername = request.getUsername();
-
-        CalculatorDatabaseConnection database = CalculatorDatabaseConnection.getInstance();
-        if (database.checkUserExistance(providedUsername)) {
-            database.deleteUser(providedUsername);
-            UserDeleteResult result = UserDeleteResult.newBuilder()
-                    .setResult(UserDeleteResult.DeleteResult.DELETE_SUCCESSFUL).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
-        } else {
-            UserDeleteResult result = UserDeleteResult.newBuilder()
-                    .setResult(UserDeleteResult.DeleteResult.DELETE_FAILED).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
-        }
+        responseObserver.onNext(result);
+        responseObserver.onCompleted();
     }
 
     @Override
-    public void newAdmin(OrowanNewAdminCredentials request, StreamObserver<NewAdminResult> responseObserver) {
-        String providedAdminName = request.getUsername();
-        CalculatorDatabaseConnection database = CalculatorDatabaseConnection.getInstance();
-
-        if (!database.checkUserExistance(providedAdminName)) {
-            NewAdminResult result = NewAdminResult.newBuilder()
-                    .setResult(NewAdminResult.AdminResult.ADMIN_FAILED).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+    public void deleteUser(UserDeletionRequest request, StreamObserver<UserOperationResult> responseObserver) {
+        UserOperationResult result = null;
+        if (database.checkUserExistence(request.getUsername())) {
+            //If the user exists then delete
+            database.deleteUser(request.getUsername());
+            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         } else {
-            database.setJob(providedAdminName, Job.PROCESS_ENGINEER);
-            NewAdminResult result = NewAdminResult.newBuilder()
-                    .setResult(NewAdminResult.AdminResult.ADMIN_SUCCESSFUL).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+            //If the user does not exist
+            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         }
+        responseObserver.onNext(result);
+        responseObserver.onCompleted();
     }
 
     @Override
-    public void newWorker(OrowanNewWorkerCredentials request, StreamObserver<NewWorkerResult> responseObserver) {
-        String providedWorkerName = request.getUsername();
-        CalculatorDatabaseConnection database = CalculatorDatabaseConnection.getInstance();
-
-        if (!database.checkUserExistance(providedWorkerName)) {
-            NewWorkerResult result = NewWorkerResult.newBuilder()
-                    .setResult(NewWorkerResult.WorkerResult.WORKER_FAILED).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+    public void setUserJob(UserJobUpdateRequest request, StreamObserver<UserOperationResult> responseObserver) {
+        UserOperationResult result = null;
+        if (!database.checkUserExistence(request.getUsername())) {
+            // If the user exists
+            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         } else {
-            database.setJob(providedWorkerName, Job.WORKER);
-            NewWorkerResult result = NewWorkerResult.newBuilder()
-                    .setResult(NewWorkerResult.WorkerResult.WORKER_SUCCESSFUL).build();
-            responseObserver.onNext(result);
-            responseObserver.onCompleted();
+            database.setUserJob(request.getUsername(), request.getJob());
+            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         }
+        responseObserver.onNext(result);
+        responseObserver.onCompleted();
     }
 }

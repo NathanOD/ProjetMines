@@ -7,7 +7,7 @@ message SubscribingRequest {
 }
 
 message EventNotification {
-
+  int32 entryId = 1;
 }
 
 // Server connects to the DatabaseNotifier and receives an empty message when a new row is added
