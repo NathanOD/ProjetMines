@@ -35,6 +35,9 @@ dependencies {
     implementation "io.grpc:grpc-services:${project.ext.get('grpcVersion')}"
     implementation("org.rationalityfrontline.workaround:grpc-api:1.51.0")
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    //Common utils
+    implementation project(':CommonUtils')
 }
 
 //Prevent any compiling of grpc-api and grpc-context
