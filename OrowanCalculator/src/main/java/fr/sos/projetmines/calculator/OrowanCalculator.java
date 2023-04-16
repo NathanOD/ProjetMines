@@ -1,80 +1,60 @@
 package fr.sos.projetmines.calculator;
 
+import fr.sos.projetmines.calculator.database.CalculatorDatabaseFacade;
 import fr.sos.projetmines.calculator.model.OrowanDataOutput;
 import fr.sos.projetmines.calculator.rpc.CalculatorServers;
 import fr.sos.projetmines.calculator.rpc.DatabaseNotifierClient;
-import fr.sos.projetmines.calculator.util.CalculatorDatabaseConnection;
-import fr.sos.projetmines.calculator.util.CalculatorConfiguration;
-import fr.sos.projetmines.calculator.util.DataFormatter;
-import fr.sos.projetmines.calculator.util.OutputDataReceiver;
-import io.grpc.Grpc;
-import io.grpc.InsecureChannelCredentials;
-import io.grpc.ManagedChannel;
-import io.netty.channel.ChannelOption;
-import org.checkerframework.checker.units.qual.C;
+import fr.sos.projetmines.commonutils.config.*;
+import fr.sos.projetmines.commonutils.event.OEventBroadcaster;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 public class OrowanCalculator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrowanCalculator.class);
 
-    public static void main(String[] args) {
-        try {
+    private static OrowanCalculator instance;
 
-            Path configPath = Path.of(System.getProperty("user.dir"), "config.properties");
-            Optional<Properties> configOpt = new CalculatorConfiguration(configPath).verifyConfig();
-            if(configOpt.isEmpty()){
-                LOGGER.error("Stopping Orowan calculator.");
-                return;
-            }
+    //----------- PUBLICLY ACCESSIBLE VARIABLES (THROUGH GETTERS)
+    private final Configuration config;
+    private final CalculatorDatabaseFacade database;
+    private final OEventBroadcaster dataInputBroadcaster;
+    //-----------
 
-            Properties config = configOpt.get();
-            CalculatorDatabaseConnection database = CalculatorDatabaseConnection.getInstance();
-            database.setDatabaseAddress(config.getProperty("db-prefix") + config.getProperty("db-url")
-                    + config.getProperty("db-name"));
-            database.setUsername(config.getProperty("db-username"));
-            database.setPassword(config.getProperty("db-password"));
-            database.connect();
-
-            if (!database.isConnected()) {
-                LOGGER.error("Stopping Orowan calculator.");
-                return;
-            }
-
-            CalculatorServers servers = new CalculatorServers(Integer.parseInt(config.getProperty("rpc-minimal-port")));
-            ManagedChannel channel = Grpc.newChannelBuilderForAddress(config.getProperty("rpc-db-url"),
-                    Integer.parseInt(config.getProperty("rpc-db-port")), InsecureChannelCredentials.create())
-                    .build();
-            DatabaseNotifierClient client = new DatabaseNotifierClient(channel);
-            client.startListeningForUpdates(Path.of(config.getProperty("orowan-exe")));
-
-
-            DataFormatter dFormatter = new DataFormatter();
-            dFormatter.formatToFile();
-            Path orowanPath = Path.of(config.getProperty("orowan-exe"));
-            dFormatter.runOrowan(orowanPath);
-            Path outputPath = Path.of(System.getProperty("user.dir"), "output.txt");
-            try {
-                dFormatter.outputToDatabase(outputPath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            servers.startServers();
-            servers.blockUntilShutdown();
-        } catch (IOException | InterruptedException e) {
-            LOGGER.error(e.getMessage());
+    private OrowanCalculator() {
+        instance = this;
+        this.dataInputBroadcaster = new OEventBroadcaster();
+        Optional<Configuration> configOpt = getConfiguration();
+        if (configOpt.isEmpty()) {
+            this.config = null;
+            this.database = null;
+            return;
         }
+        this.config = configOpt.get();
+
+        Optional<CalculatorDatabaseFacade> databaseOpt = getDatabaseConnection();
+        if (databaseOpt.isEmpty()) {
+            this.database = null;
+            return;
+        }
+        this.database = databaseOpt.get();
+
+        startRPCConnections();
     }
 
-    private static void simulateData(){
+    public static OrowanCalculator getInstance() {
+        return instance;
+    }
+
+    public static void main(String[] args) {
+        new OrowanCalculator();
+    }
+
+    private static void simulateData() {
         Random random = new Random();
 
         new Thread(() -> {
@@ -83,13 +63,82 @@ public class OrowanCalculator {
                         0, 0, 0, 0, 0, 0, "YES");
                 output.setComputationTime(204);
                 output.setRollSpeed(0.54f);
-                OutputDataReceiver.getInstance().receiveLevelTwoData(output, 3);
+                Map<String, Object> data = new HashMap<>();
+                data.put("standId", 3);
+                data.put("output", output);
+                OrowanCalculator.getInstance().getDataInputBroadcaster().broadcast(data);
                 try {
-                    Thread.sleep((long) (195L + random.nextInt(10)));
+                    Thread.sleep(195L + random.nextInt(10));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
         }).start();
+    }
+
+    private Optional<Configuration> getConfiguration() {
+        Path configPath = Path.of(System.getProperty("user.dir"), "config.properties");
+        Set<ConfigurationExpectation> expectations = new HashSet<>();
+        expectations.add(new StringExpectation("db-url", 2, 0));
+        expectations.add(new StringExpectation("db-name", 1, 0));
+        expectations.add(new StringExpectation("db-properties", 0, 0));
+        expectations.add(new ConcatenatedStringExpectation(3, 0, "db-url", "db-name"));
+        expectations.add(new StringExpectation("db-username", 1, 0));
+        expectations.add(new StringExpectation("db-password", 0, 0));
+        expectations.add(new IntExpectation("rpc-minimal-port", 0, 65535));
+        expectations.add(new StringExpectation("rpc-db-url", 2, 0));
+        expectations.add(new IntExpectation("rpc-db-port", 0, 65535));
+        expectations.add(new StringExpectation("orowan-exe", 5, 0));
+        try {
+            Configuration config = new Configuration(configPath, "default-config.properties", expectations);
+            boolean validated = config.validateConfiguration();
+            if (!validated) {
+                return Optional.empty();
+            }
+            return Optional.of(config);
+        } catch (IOException ioException) {
+            LOGGER.error("Could not interact with the configuration");
+        } catch (ConfigurationFilePathException e) {
+            LOGGER.error(e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    private Optional<CalculatorDatabaseFacade> getDatabaseConnection() {
+        String address = "jdbc:h2:" + config.getConcatenatedValue("db-url", "db-name", "db-properties");
+        String username = config.getStringValue("db-username");
+        String password = config.getStringValue("db-password");
+        CalculatorDatabaseFacade database = new CalculatorDatabaseFacade(address, username, password);
+        boolean databaseConnected = database.connect();
+        if (!databaseConnected) {
+            return Optional.empty();
+        }
+        return Optional.of(database);
+    }
+
+    private void startRPCConnections() {
+        CalculatorServers servers = new CalculatorServers(config.getIntValue("rpc-minimal-port"));
+        DatabaseNotifierClient client = new DatabaseNotifierClient();
+        client.startListeningForUpdates();
+
+        try {
+            servers.startServers();
+            servers.blockUntilShutdown();
+        } catch (IOException | InterruptedException e) {
+            LOGGER.error(e.getMessage());
+        }
+
+    }
+
+    public Configuration getConfig() {
+        return config;
+    }
+
+    public CalculatorDatabaseFacade getDatabase() {
+        return database;
+    }
+
+    public OEventBroadcaster getDataInputBroadcaster() {
+        return dataInputBroadcaster;
     }
 }

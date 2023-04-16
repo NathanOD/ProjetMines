@@ -1,18 +1,14 @@
 package fr.sos.projetmines.calculator.rpc;
 
 import fr.sos.projetmines.*;
-import fr.sos.projetmines.calculator.util.CalculatorDatabaseConnection;
+import fr.sos.projetmines.calculator.OrowanCalculator;
+import fr.sos.projetmines.calculator.database.CalculatorDatabaseFacade;
 import fr.sos.projetmines.calculator.util.DataFormatter;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAuthenticatorImplBase {
 
@@ -20,25 +16,21 @@ public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAu
 
     @Override
     public void authenticateUser(OrowanUserCredentials request, StreamObserver<OrowanConnectionResult> responseObserver) {
-        String providedUsername = request.getUsername();
-        String providedPassword = request.getPassword();
-
-        /*byte[] salt = generateSalt();
-        byte[] password = hashPassword(providedPassword, salt);
-        CalculatorDatabaseConnection.getInstance().addUser(providedUsername, password, salt, Job.PROCESS_ENGINEER);*/
-
-        byte[][] passAndSalt = CalculatorDatabaseConnection.getInstance().getPasswordAndSalt(providedUsername);
+        LOGGER.debug("Received an authentication request.");
+        CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
+        byte[][] passAndSalt = database.getPasswordAndSalt(request.getUsername());
         if (passAndSalt.length != 0) {
             byte[] passwordHash = passAndSalt[0];
             byte[] salt = passAndSalt[1];
-            byte[] testedHash = DataFormatter.hashPassword(providedPassword, salt);
+            byte[] testedHash = DataFormatter.hashPassword(request.getPassword(), salt);
             if (Arrays.equals(testedHash, passwordHash)) {
                 OrowanConnectionResult result = OrowanConnectionResult.newBuilder()
                         .setResult(ConnectionResult.LOGIN_SUCCESSFUL)
-                        .setUserJob(CalculatorDatabaseConnection.getInstance().getJob(providedUsername).orElse(Job.WORKER))
+                        .setUserJob(database.getUserJob(request.getUsername()).orElse(Job.WORKER))
                         .build();
                 responseObserver.onNext(result);
                 responseObserver.onCompleted();
+                LOGGER.info("User {} successfully connected", request.getUsername());
                 return;
             }
         }
@@ -48,6 +40,7 @@ public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAu
                 .build();
         responseObserver.onNext(result);
         responseObserver.onCompleted();
+        LOGGER.info("User {} was unable to authenticate.", request.getUsername());
     }
 
 

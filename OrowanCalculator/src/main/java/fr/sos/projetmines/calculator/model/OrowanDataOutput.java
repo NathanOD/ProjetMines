@@ -17,21 +17,21 @@ public class OrowanDataOutput {
      private long computationTime;
      private float rollSpeed;
 
-     public OrowanDataOutput(int caseId, String errors, float offset_yield, float friction, float rolling_Torque,
-                             float sigma_moy, float sigma_ini, float sigma_out, float sigma_max, float force_error,
-                             float slip_error, String has_converged) {
+     public OrowanDataOutput(int caseId, String errors, float offsetYield, float friction, float rollingTorque,
+                             float sigmaMoy, float sigmaIni, float sigmaOut, float sigmaMax, float forceError,
+                             float slipError, String hasConverged) {
           this.caseId = caseId;
           this.errors = errors;
-          this.offsetYield = offset_yield;
+          this.offsetYield = offsetYield;
           this.friction = friction;
-          this.rollingTorque = rolling_Torque;
-          this.sigmaMoy = sigma_moy;
-          this.sigmaIni = sigma_ini;
-          this.sigmaOut = sigma_out;
-          this.sigmaMax = sigma_max;
-          this.forceError = force_error;
-          this.slipError = slip_error;
-          this.hasConverged = has_converged;
+          this.rollingTorque = rollingTorque;
+          this.sigmaMoy = sigmaMoy;
+          this.sigmaIni = sigmaIni;
+          this.sigmaOut = sigmaOut;
+          this.sigmaMax = sigmaMax;
+          this.forceError = forceError;
+          this.slipError = slipError;
+          this.hasConverged = hasConverged;
      }
 
      public int getCaseId() {
