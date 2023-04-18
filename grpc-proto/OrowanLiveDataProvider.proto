@@ -17,6 +17,7 @@ message CurvePoint {
   float roll_speed = 2;
   float sigma = 3;
   uint64 computation_time = 4;
+  uint64 x_time = 5 ;
 }
 
 message FrictionCoefficient {
