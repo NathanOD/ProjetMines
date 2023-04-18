@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="workerMainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.sos.projetmines.gui.controller.WorkerController">
     <top>
-        <MenuBar BorderPane.alignment="CENTER">
+        <MenuBar fx:id="workerMenuBar" BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -31,45 +26,48 @@
         </MenuBar>
     </top>
     <bottom>
-        <HBox prefHeight="44.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="0.0" spacing="50.0" BorderPane.alignment="CENTER">
             <children>
-                <Text stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-translate-x: 5; -fx-translate-y: 10;" text="Stand ID :" wrappingWidth="53.7244873046875" />
-                <TextField editable="false" promptText="ID" style="-fx-translate-y: 6; -fx-translate-x: 10;" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-translate-y: 10; -fx-translate-x: 40;" text="Orowan Computation Time :" />
-                <TextField editable="false" promptText="Time" style="-fx-translate-y: 6; -fx-translate-x: 45;" />
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-translate-y: 10; -fx-translate-x: 65;" text="Friction coefficient factor :" />
-                <TextField editable="false" promptText="Factor" style="-fx-translate-y: 6; -fx-translate-x: 70;" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%ui.worker.standid" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%ui.worker.computationtime" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%ui.worker.frictionfactor" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
             </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
         </HBox>
     </bottom>
     <center>
-        <HBox prefHeight="100.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+        <VBox fx:id="chartBox" alignment="CENTER" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
             <children>
-                <LineChart prefHeight="449.0" prefWidth="300.0" style="-fx-max-height: 400; -fx-max-width: 300; -fx-translate-y: 80;" title="Friction">
+                <LineChart fx:id="frictionChart" prefHeight="0.0" prefWidth="0.0" title="Friction">
                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisFriction" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis fx:id="yAxisFriction" side="LEFT" />
                     </yAxis>
                 </LineChart>
-                <LineChart style="-fx-max-height: 400; -fx-max-width: 300; -fx-translate-y: 80;" title="Roll Speed">
+                <LineChart fx:id="rollSpeedChart" prefHeight="0.0" prefWidth="0.0" title="Roll Speed">
                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisRollSpeed" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis fx:id="yAxisRollSpeed" side="LEFT" />
                     </yAxis>
                 </LineChart>
-                <LineChart style="-fx-max-height: 400; -fx-max-width: 300; -fx-translate-y: 80;" title="Sigma">
+                <LineChart fx:id="sigmaChart" prefHeight="0.0" prefWidth="0.0" title="Sigma">
                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
+                        <NumberAxis side="BOTTOM" fx:id="xAxisSigma" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis side="LEFT" />
+                        <NumberAxis fx:id="yAxisSigma" side="LEFT" />
                     </yAxis>
                 </LineChart>
             </children>
-        </HBox>
+        </VBox>
     </center>
 </BorderPane>

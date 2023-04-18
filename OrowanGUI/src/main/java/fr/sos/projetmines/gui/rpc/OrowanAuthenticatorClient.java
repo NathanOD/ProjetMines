@@ -31,7 +31,7 @@ public class OrowanAuthenticatorClient {
         try {
             result = client.authenticateUser(creds);
         } catch (StatusRuntimeException e) {
-            LOGGER.warn("RPC Failed: {}", e.getStatus());
+            LOGGER.warn("RPC Failed: {}", e.getLocalizedMessage());
         }
         return Optional.ofNullable(result);
     }

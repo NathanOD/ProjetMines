@@ -3,11 +3,11 @@ package fr.sos.projetmines.gui.util;
 import fr.sos.projetmines.ConnectionResult;
 import fr.sos.projetmines.Job;
 import fr.sos.projetmines.OrowanConnectionResult;
+import fr.sos.projetmines.gui.controller.OrowanController;
 import fr.sos.projetmines.gui.rpc.OrowanAuthenticatorClient;
 import io.grpc.Grpc;
 import io.grpc.InsecureChannelCredentials;
 import io.grpc.ManagedChannel;
-import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class CalculatorClientService extends Service<Job> {
+public class AuthenticatorTask extends Service<Job> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CalculatorClientService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticatorTask.class);
 
 
     private final StringProperty username = new SimpleStringProperty();
@@ -92,12 +92,8 @@ public class CalculatorClientService extends Service<Job> {
                     OrowanAuthenticatorClient client = new OrowanAuthenticatorClient(channel);
                     Optional<OrowanConnectionResult> resultOpt = client.sendConnectionRequest(getUsername(), getPassword());
                     if (resultOpt.isPresent() && resultOpt.get().getResult() == ConnectionResult.LOGIN_SUCCESSFUL) {
-                        Platform.runLater(() -> {
-                            LiveDataService service = new LiveDataService();
-                            service.setHost(getHost());
-                            service.setPort(getPort()+1);
-                            service.start();
-                        });
+                        OrowanController.getInstance().setHost(getHost());
+                        OrowanController.getInstance().setPort(getPort());
                         return resultOpt.get().getUserJob();
                     } else {
                         fireEvent(new WorkerStateEvent(this, WorkerStateEvent.WORKER_STATE_FAILED));

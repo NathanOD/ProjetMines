@@ -1,18 +1,12 @@
 package fr.sos.projetmines.gui.controller;
 
-import fr.sos.projetmines.CurvePoint;
-import fr.sos.projetmines.gui.rpc.OrowanLivedataClient;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -22,16 +16,13 @@ public class OrowanController {
     private static OrowanController instance;
     private final Stage stage;
 
-
-
-
-
-
-
-
     public static OrowanController getInstance(){
         return instance;
     }
+
+    private String host;
+    private int port;
+
 
     public OrowanController(Stage stage) {
         if (instance == null){
@@ -65,7 +56,7 @@ public class OrowanController {
     }
 
     public void showProcessEngineerScene() {
-        showScene("admin-scene.fxml");
+        showScene("engineer-scene.fxml");
     }
 
     private void showScene(String sceneFileName) {
@@ -80,5 +71,21 @@ public class OrowanController {
         } catch (IOException exception) {
             LOGGER.error(exception.getMessage());
         }
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }

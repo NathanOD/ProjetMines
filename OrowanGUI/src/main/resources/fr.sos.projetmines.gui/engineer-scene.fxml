@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="engineerMainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.sos.projetmines.gui.controller.EngineerController">
+    <top>
+        <MenuBar fx:id="engineerMenuBar" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Disconnect" />
+                        <MenuItem mnemonicParsing="false" text="Exit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+   <center>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="40.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="0.0" vgap="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" minHeight="175.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">
+               <children>
+                      <Label text="User management" textAlignment="CENTER" />
+                      <ChoiceBox fx:id="engineerUserManagementChoice" prefWidth="200.0" />
+                  <HBox alignment="CENTER" spacing="5.0">
+                     <children>
+                            <Button fx:id="engineerDeleteUser" mnemonicParsing="false" text="Delete User" />
+                            <Button fx:id="engineerPromoteUser" mnemonicParsing="false" text="Set Admin" />
+                            <Button fx:id="engineerDemoteUser" mnemonicParsing="false" text="Set Worker" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" minHeight="175.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">
+               <children>
+                      <Label text="Ajouter un Utilisateur" textAlignment="CENTER" />
+                  <VBox alignment="CENTER" prefHeight="0.0" prefWidth="0.0" spacing="5.0">
+                     <children>
+                            <TextField fx:id="engineerAddUserUsername" alignment="CENTER" promptText="username" />
+                            <TextField fx:id="engineerAddUserPassword" alignment="CENTER" promptText="password" />
+                        <ChoiceBox fx:id="engineerAddUserJob" prefHeight="0.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                      <Button fx:id="engineerAddUser" mnemonicParsing="false" text="Add User" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" maxHeight="115.0" minHeight="100.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">
+               <children>
+                      <Label text="Liste des Stands" textAlignment="CENTER" />
+                      <ChoiceBox fx:id="engineerStandListChoice" prefWidth="200.0" />
+                  <HBox alignment="CENTER" prefHeight="0.0" prefWidth="0.0" spacing="5.0">
+                     <children>
+                            <Button fx:id="engineerAddStand" mnemonicParsing="false" text="Enable Stand" />
+                            <Button fx:id="engineerDeleteStand" mnemonicParsing="false" text="Disable Stand" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" maxHeight="75.0" minHeight="50.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">
+               <children>
+                      <Label text="Level 2 input range" textAlignment="CENTER" />
+                      <Button disable="true" mnemonicParsing="false" text="Coming soon..." />
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+      </FlowPane>
+   </center>
+   <bottom>
+      <HBox alignment="TOP_CENTER" prefHeight="0.0" prefWidth="0.0" spacing="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" text="%ui.worker.standid" />
+            <Label text="%ui.worker.computationtime" />
+            <Label text="%ui.worker.frictionfactor" />
+         </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding></HBox>
+   </bottom>
+</BorderPane>

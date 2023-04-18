@@ -1,7 +1,7 @@
 package fr.sos.projetmines.gui.controller;
 
 import fr.sos.projetmines.Job;
-import fr.sos.projetmines.gui.util.CalculatorClientService;
+import fr.sos.projetmines.gui.util.AuthenticatorTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -13,10 +13,10 @@ public class LoginController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-    private final CalculatorClientService service;
+    private final AuthenticatorTask service;
 
     public LoginController(){
-        service = new CalculatorClientService();
+        service = new AuthenticatorTask();
         service.setOnSucceeded(event -> {
             Job result = (Job) event.getSource().getValue();
             if (result == Job.PROCESS_ENGINEER) {
