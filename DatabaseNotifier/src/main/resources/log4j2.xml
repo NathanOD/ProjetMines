@@ -23,7 +23,7 @@
         <Logger level="warn" name="io.grpc.netty">
             <AppenderRef ref="console" />
         </Logger>
-        <Logger level="warn" name="io.grpc.netty.*">
+        <Logger level="warn" name="io.netty">
             <AppenderRef ref="console" />
         </Logger>
     </Loggers>
