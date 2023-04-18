@@ -11,10 +11,13 @@ import org.slf4j.LoggerFactory;
 
 public class UserManagementService extends UserManagementGrpc.UserManagementImplBase {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementService.class);
+
     private final CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
 
     @Override
     public void createUser(UserCreationRequest request, StreamObserver<UserOperationResult> responseObserver) {
+        LOGGER.debug("Received an user creation request.");
         byte[] salt = DataFormatter.generateSalt();
         byte[] passwordHash = DataFormatter.hashPassword(request.getPassword(), salt);
 

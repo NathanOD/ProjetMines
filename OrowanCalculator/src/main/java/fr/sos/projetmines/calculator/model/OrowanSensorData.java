@@ -14,9 +14,12 @@ public class OrowanSensorData {
     private final float mu;
     private final float rollForce;
     private final float forwardSlip;
+    private final long xTime;
 
 
-    public OrowanSensorData(int standId, int lp, float entryThickness, float exitThickness, float entryTension, float exitTension, float workRollDiameter, float youngModulus, float averageSigma, float mu, float rollForce, float forwardSlip) {
+    public OrowanSensorData(int standId, int lp, float entryThickness, float exitThickness, float entryTension,
+                            float exitTension, float workRollDiameter, float youngModulus, float averageSigma,
+                            float mu, float rollForce, float forwardSlip, long xTime) {
         this.standId = standId;
         this.lp = lp;
         this.entryThickness = entryThickness;
@@ -29,6 +32,7 @@ public class OrowanSensorData {
         this.mu = mu;
         this.rollForce = rollForce;
         this.forwardSlip = forwardSlip;
+        this.xTime = xTime;
     }
 
     public int getStandId() {
@@ -77,5 +81,9 @@ public class OrowanSensorData {
 
     public float getForwardSlip() {
         return forwardSlip;
+    }
+
+    public long getXTime() {
+        return xTime;
     }
 }

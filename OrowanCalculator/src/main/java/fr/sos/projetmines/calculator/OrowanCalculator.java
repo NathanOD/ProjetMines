@@ -42,7 +42,7 @@ public class OrowanCalculator {
             return;
         }
         this.database = databaseOpt.get();
-
+        //simulateData();
         startRPCConnections();
     }
 
@@ -58,11 +58,13 @@ public class OrowanCalculator {
         Random random = new Random();
 
         new Thread(() -> {
+            long time = System.currentTimeMillis();
             while (true) {
-                OrowanDataOutput output = new OrowanDataOutput(0, "VOID", 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, "YES");
+                OrowanDataOutput output = new OrowanDataOutput(0, "VOID", 0, 45 + random.nextInt(10), 0,
+                        50, 0, 0, 0, 0, 0, "YES");
                 output.setComputationTime(204);
-                output.setRollSpeed(0.54f);
+                output.setRollSpeed(0);
+                output.setXTime(System.currentTimeMillis() - time);
                 Map<String, Object> data = new HashMap<>();
                 data.put("standId", 3);
                 data.put("output", output);
@@ -119,7 +121,7 @@ public class OrowanCalculator {
     private void startRPCConnections() {
         CalculatorServers servers = new CalculatorServers(config.getIntValue("rpc-minimal-port"));
         DatabaseNotifierClient client = new DatabaseNotifierClient();
-        client.startListeningForUpdates();
+        new Thread(client::startListeningForUpdates).start();
 
         try {
             servers.startServers();

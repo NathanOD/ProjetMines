@@ -40,6 +40,7 @@ public class DatabaseNotifierClient {
             client.rowInserted(subscribingRequest, new StreamObserver<>() {
                 @Override
                 public void onNext(EventNotification value) {
+                    LOGGER.debug("New sensor input in the database!");
                     DataFormatter dFormatter = new DataFormatter();
                     Optional<OrowanSensorData> sensorData = dFormatter.sensorDataToFile(value.getEntryId());
                     if(sensorData.isEmpty()){
@@ -52,6 +53,7 @@ public class DatabaseNotifierClient {
                     Path outputPath = Path.of(System.getProperty("user.dir"), "output.txt");
                     Optional<OrowanDataOutput> output = dFormatter.saveOrowanOutputToDatabase(outputPath);
                     if(output.isPresent()){
+                        output.get().setXTime(sensorData.get().getXTime());
                         Map<String, Object> data = new HashMap<>();
                         data.put("standId", sensorData.get().getStandId());
                         data.put("output", output.get());

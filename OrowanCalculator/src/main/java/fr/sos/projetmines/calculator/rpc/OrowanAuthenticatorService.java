@@ -40,7 +40,7 @@ public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAu
                 .build();
         responseObserver.onNext(result);
         responseObserver.onCompleted();
-        LOGGER.info("User {} was unable to authenticate.", request.getUsername());
+        LOGGER.debug("User {} was unable to authenticate.", request.getUsername());
     }
 
 

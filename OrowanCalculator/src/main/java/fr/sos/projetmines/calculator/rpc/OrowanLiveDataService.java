@@ -44,7 +44,7 @@ public class OrowanLiveDataService extends OrowanLiveDataProviderGrpc.OrowanLive
     }
 
     @Override
-    public void notifyEvent(Map<String, ?> eventData) {
+    public void onEvent(Map<String, ?> eventData) {
         int standId = (int) eventData.get("standId");
         OrowanDataOutput output = (OrowanDataOutput) eventData.get("output");
         //Check for stand clients existence
@@ -58,6 +58,7 @@ public class OrowanLiveDataService extends OrowanLiveDataProviderGrpc.OrowanLive
                             .setSigma(output.getSigmaMoy())
                             .setFrictionCoefficient(output.getFriction())
                             .setRollSpeed(output.getRollSpeed())
+                            .setXTime(output.getXTime())
                             .build();
                     response.onNext(point);
                 } catch (StatusRuntimeException | NullPointerException exception) {
