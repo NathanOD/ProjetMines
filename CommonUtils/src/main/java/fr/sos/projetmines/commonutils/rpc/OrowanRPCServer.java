@@ -1,7 +1,6 @@
 package fr.sos.projetmines.commonutils.rpc;
 
 import io.grpc.BindableService;
-import io.grpc.Grpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
@@ -15,20 +14,23 @@ public class OrowanRPCServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrowanRPCServer.class);
 
     private final Server server;
+    private final String serverName;
 
 
-    public OrowanRPCServer(int port, BindableService service) {
+    public OrowanRPCServer(int port, String serverName, BindableService service) {
+        this.serverName = serverName;
         server = ServerBuilder.forPort(port).addService(service).build();
     }
 
     /**
      * Starts the server on the parametrized port
+     *
      * @throws IOException if the server cannot be started
      */
     public void startServer() throws IOException {
         if (server != null) {
             server.start();
-            LOGGER.info("Database Event notifier RPC Server successfully started on port {}.", server.getPort());
+            LOGGER.info("{} RPC Server successfully started on port {}.", serverName, server.getPort());
         }
     }
 

@@ -13,7 +13,7 @@ public class OEventBroadcaster {
     }
 
     public void broadcast(Map<String, ?> eventData){
-        listeners.forEach(listener -> listener.notifyEvent(eventData));
+        listeners.forEach(listener -> listener.onEvent(eventData));
     }
 
     public void registerListener(OEventListener listener){

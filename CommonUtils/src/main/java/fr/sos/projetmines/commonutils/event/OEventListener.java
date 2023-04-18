@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface OEventListener {
 
-    void notifyEvent(Map<String, ?> eventData);
+    void onEvent(Map<String, ?> eventData);
 }
