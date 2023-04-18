@@ -3,7 +3,10 @@ package fr.sos.projetmines.inputsimulator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class InputSimulatorDatabaseConnection {
 
@@ -82,7 +85,7 @@ public class InputSimulatorDatabaseConnection {
                 String exists = "SELECT stand_id FROM STRIPS WHERE strip_id = ?";
                 PreparedStatement statement = connection.prepareStatement(exists);
                 statement.setInt(1, entry.getStrip().getStripId());
-                if(!statement.executeQuery().next()){
+                if (!statement.executeQuery().next()) {
                     String stripInsertion = "INSERT INTO STRIPS (strip_id, stand_id, work_roll_diameter, rolled_length, " +
                             "young_modulus, backup_roll_diameter, backup_rolled_length) VALUES (?,?,?,?,?,?,?)";
                     Strip strip = entry.getStrip();

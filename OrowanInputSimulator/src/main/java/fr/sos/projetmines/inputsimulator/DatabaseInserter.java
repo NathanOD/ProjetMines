@@ -33,7 +33,7 @@ public class DatabaseInserter {
 
         // On se connecte à la base de données
         InputSimulatorDatabaseConnection dbConnection = InputSimulatorDatabaseConnection.getInstance();
-        dbConnection.setDatabaseAddress("jdbc:h2:C:/Users/steve/Documents/Cours/FIG172/2IA/Projet IL/db/orowan;AUTO_SERVER=true");
+        dbConnection.setDatabaseAddress("jdbc:h2:tcp://localhost/C:/Users/steve/Documents/Cours/FIG172/2IA/Projet IL/db/orowan;IGNORECASE=TRUE;AUTO_SERVER=true;AUTO_RECONNECT=TRUE");
         dbConnection.setUsername("simulator");
         dbConnection.setPassword("simulator");
         dbConnection.connect();
@@ -42,7 +42,7 @@ public class DatabaseInserter {
         bufferedReader.readLine(); // Skip header line
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            String[] columns = line.split("\\t+");
+            String[] columns = line.split("\t+");
 
             int[] integerValues = new int[2];
             float[] doubleValues = new float[columns.length - 3];
