@@ -19,13 +19,16 @@ public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAu
         LOGGER.debug("Received an authentication request.");
         CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
         byte[][] passAndSalt = database.getPasswordAndSalt(request.getUsername());
+
         if (passAndSalt.length != 0) {
             byte[] passwordHash = passAndSalt[0];
             byte[] salt = passAndSalt[1];
             byte[] testedHash = DataFormatter.hashPassword(request.getPassword(), salt);
+
+
             if (Arrays.equals(testedHash, passwordHash)) {
                 OrowanConnectionResult result = OrowanConnectionResult.newBuilder()
-                        .setResult(ConnectionResult.LOGIN_SUCCESSFUL)
+                        .setResult(OperationResult.SUCCESSFUL)
                         .setUserJob(database.getUserJob(request.getUsername()).orElse(Job.WORKER))
                         .build();
                 responseObserver.onNext(result);
@@ -35,7 +38,7 @@ public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAu
             }
         }
         OrowanConnectionResult result = OrowanConnectionResult.newBuilder()
-                .setResult(ConnectionResult.WRONG_CREDENTIALS)
+                .setResult(OperationResult.FAIL)
                 .setUserJob(Job.WORKER)
                 .build();
         responseObserver.onNext(result);

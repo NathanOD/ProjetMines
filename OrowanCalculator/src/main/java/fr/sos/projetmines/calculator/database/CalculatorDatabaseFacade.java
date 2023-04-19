@@ -3,24 +3,28 @@ package fr.sos.projetmines.calculator.database;
 
 import fr.sos.projetmines.Job;
 import fr.sos.projetmines.calculator.model.OrowanDataOutput;
+import fr.sos.projetmines.calculator.model.OrowanInputDataRange;
 import fr.sos.projetmines.calculator.model.OrowanSensorData;
 import fr.sos.projetmines.commonutils.database.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class CalculatorDatabaseFacade extends DatabaseConnection {
 
     private final AuthenticatorRequests authenticatorRequests;
     private final OrowanDataRequests orowanDataRequests;
     private final UserManagingRequests userManagingRequests;
+    private final InputRangeRequests inputRangeRequests;
 
     public CalculatorDatabaseFacade(String address, String username, String password) {
         super(address, username, password);
         this.authenticatorRequests = new AuthenticatorRequests(this);
         this.orowanDataRequests = new OrowanDataRequests(this);
         this.userManagingRequests = new UserManagingRequests(this);
+        this.inputRangeRequests = new InputRangeRequests(this);
     }
 
     public byte[][] getPasswordAndSalt(String username){
@@ -53,5 +57,17 @@ public class CalculatorDatabaseFacade extends DatabaseConnection {
 
     public void deleteUser(String username) {
         userManagingRequests.deleteUser(username);
+    }
+
+    public Set<OrowanInputDataRange> getInputRanges(){
+        return inputRangeRequests.getInputRanges();
+    }
+
+    public void updateConstraintInputRange(OrowanInputDataRange inputDataRange) {
+        inputRangeRequests.updateConstraintInputRange(inputDataRange);
+    }
+
+    public Optional<Set<String>> getUsers() {
+        return userManagingRequests.getUsers();
     }
 }

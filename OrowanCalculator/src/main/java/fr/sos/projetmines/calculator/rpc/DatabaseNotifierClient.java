@@ -8,13 +8,14 @@ import fr.sos.projetmines.calculator.model.OrowanDataOutput;
 import fr.sos.projetmines.calculator.model.OrowanSensorData;
 import fr.sos.projetmines.calculator.util.DataFormatter;
 import fr.sos.projetmines.commonutils.config.Configuration;
-import fr.sos.projetmines.commonutils.event.OEventBroadcaster;
-import io.grpc.*;
+import io.grpc.Grpc;
+import io.grpc.InsecureChannelCredentials;
+import io.grpc.ManagedChannel;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyChangeSupport;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,39 +26,57 @@ public class DatabaseNotifierClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseNotifierClient.class);
 
     private final EventNotifierGrpc.EventNotifierStub client; //asynchronous
+    private final int port;
 
     public DatabaseNotifierClient() {
         Configuration config = OrowanCalculator.getInstance().getConfig();
+        this.port = config.getIntValue("rpc-db-port");
         ManagedChannel channel = Grpc.newChannelBuilderForAddress(config.getStringValue("rpc-db-url"),
-                config.getIntValue("rpc-db-port"), InsecureChannelCredentials.create()).build();
+                port, InsecureChannelCredentials.create()).build();
+
         client = EventNotifierGrpc.newStub(channel);
     }
 
     public void startListeningForUpdates() {
         SubscribingRequest subscribingRequest = SubscribingRequest.newBuilder().build();
         OrowanCalculator calculator = OrowanCalculator.getInstance();
+        DataFormatter dFormatter = new DataFormatter();
+        Path orowanPath = Path.of(calculator.getConfig().getStringValue("orowan-exe"));
+        Path outputPath = Path.of(System.getProperty("user.dir"), "output.txt");
+        Map<String, Object> data = new HashMap<>();
+
         try {
+            LOGGER.debug("Connecting to database notifier on port {}...", port);
             client.rowInserted(subscribingRequest, new StreamObserver<>() {
                 @Override
                 public void onNext(EventNotification value) {
-                    LOGGER.debug("New sensor input in the database!");
-                    DataFormatter dFormatter = new DataFormatter();
-                    Optional<OrowanSensorData> sensorData = dFormatter.sensorDataToFile(value.getEntryId());
-                    if(sensorData.isEmpty()){
+                    long start = System.currentTimeMillis();
+                    Optional<OrowanSensorData> sensorDataOpt = dFormatter.sensorDataToFile(value.getEntryId());
+                    if (sensorDataOpt.isEmpty()) {
+                        LOGGER.warn("Sensor data could not be converted to input file!");
+                        return;
+                    }
+                    OrowanSensorData sensorData = sensorDataOpt.get();
+                    if (!sensorData.respectsConstraints()) {
+                        LOGGER.warn("Sensor data does not respect the constraints.");
                         return;
                     }
 
-                    Path orowanPath = Path.of(calculator.getConfig().getStringValue("orowan-exe"));
                     dFormatter.runOrowan(orowanPath);
 
-                    Path outputPath = Path.of(System.getProperty("user.dir"), "output.txt");
-                    Optional<OrowanDataOutput> output = dFormatter.saveOrowanOutputToDatabase(outputPath);
-                    if(output.isPresent()){
-                        output.get().setXTime(sensorData.get().getXTime());
-                        Map<String, Object> data = new HashMap<>();
-                        data.put("standId", sensorData.get().getStandId());
-                        data.put("output", output.get());
+                    Optional<OrowanDataOutput> outputOpt = dFormatter.saveOrowanOutputToDatabase(outputPath);
+                    long end = System.currentTimeMillis();
+
+                    if (outputOpt.isPresent()) {
+                        OrowanDataOutput output = outputOpt.get();
+                        output.setRollSpeed(sensorData.getRollSpeed());
+                        output.setXTime(sensorData.getXTime());
+                        output.setComputationTime(end - start);
+                        data.put("standId", sensorData.getStandId());
+                        data.put("output", output);
                         OrowanCalculator.getInstance().getDataInputBroadcaster().broadcast(data);
+                    } else {
+                        LOGGER.warn("Orowan output data could not be saved into database!");
                     }
                 }
 

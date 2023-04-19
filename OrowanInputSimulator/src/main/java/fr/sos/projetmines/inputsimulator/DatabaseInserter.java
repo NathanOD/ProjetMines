@@ -31,13 +31,7 @@ public class DatabaseInserter {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputCsv));
         double lastTime = 0;
 
-        // On se connecte à la base de données
         InputSimulatorDatabaseConnection dbConnection = InputSimulatorDatabaseConnection.getInstance();
-        dbConnection.setDatabaseAddress("jdbc:h2:tcp://localhost/C:/Users/steve/Documents/Cours/FIG172/2IA/Projet IL/db/orowan;IGNORECASE=TRUE;AUTO_SERVER=true;AUTO_RECONNECT=TRUE");
-        dbConnection.setUsername("simulator");
-        dbConnection.setPassword("simulator");
-        dbConnection.connect();
-
         // On ouvre le fichier CSV
         bufferedReader.readLine(); // Skip header line
         String line;
@@ -64,11 +58,10 @@ public class DatabaseInserter {
                     doubleValues[18], doubleValues[19], doubleValues[20], doubleValues[21]);
 
             if (getStripById(1).isEmpty()) {
-                dbConnection.insertData(entry, true);
+                dbConnection.insertStrip(entry.getStrip());
                 strips.add(strip);
-            } else {
-                dbConnection.insertData(entry, false);
             }
+            dbConnection.insertData(entry);
 
             LOGGER.debug("Added a value to the database");
             // On attend avant de passer à l'entrée suivante

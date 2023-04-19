@@ -30,8 +30,8 @@ class OrowanDataRequests {
             return Optional.empty();
         }
         try {
-            String dataQuery = "SELECT S.stand_id, IO.lp, IO.entry_thickness, IO.exit_thickness, IO.entry_tension, IO.exit_tension, " +
-                    "S.work_roll_diameter, S.young_modulus, IO.average_sigma, IO.mu, IO.roll_force, IO.forward_slip, IO.X_TIME " +
+            String dataQuery = "SELECT S.stand_id, IO.lp, IO.X_LOC, IO.entry_thickness, IO.exit_thickness, IO.entry_tension, IO.exit_tension, " +
+                    "S.work_roll_diameter, S.young_modulus, IO.average_sigma, IO.mu, IO.roll_force, IO.forward_slip, IO.X_TIME, IO.ROLL_SPEED " +
                     "FROM INPUT_OROWAN IO " +
                     "JOIN STRIPS S ON IO.mat_id = S.strip_id\n" +
                     "WHERE IO.ENTRY_ID = ?";
@@ -41,12 +41,13 @@ class OrowanDataRequests {
             rs.first();
 
             OrowanSensorData data = new OrowanSensorData(rs.getInt("stand_id"), rs.getInt("lp"),
-                    rs.getFloat("entry_thickness"), rs.getFloat("exit_thickness"),
-                    rs.getFloat("entry_tension"), rs.getFloat("exit_tension"),
-                    rs.getFloat("work_roll_diameter"), rs.getFloat("young_modulus"),
-                    rs.getFloat("average_sigma"), rs.getFloat("mu"),
-                    rs.getFloat("roll_force"), rs.getFloat("forward_slip"),
-                    rs.getLong("x_time"));
+                    rs.getFloat("x_loc"),  rs.getFloat("entry_thickness"),
+                    rs.getFloat("exit_thickness"), rs.getFloat("entry_tension"),
+                    rs.getFloat("exit_tension"), rs.getFloat("work_roll_diameter"),
+                    rs.getFloat("young_modulus"), rs.getFloat("average_sigma"),
+                    rs.getFloat("mu"), rs.getFloat("roll_force"),
+                    rs.getFloat("forward_slip"), rs.getFloat("x_time"),
+                    rs.getFloat("roll_speed"));
 
             rs.close();
             dataQueryStatement.close();

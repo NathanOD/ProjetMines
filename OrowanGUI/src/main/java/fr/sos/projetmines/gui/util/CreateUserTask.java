@@ -21,11 +21,6 @@ public class CreateUserTask extends UserManagementTask {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateUserTask.class);
 
-    public CreateUserTask(UserManagementClient client){
-        super(client);
-    }
-
-
     private final StringProperty username = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
     private final ObjectProperty<Job> job = new SimpleObjectProperty<>();
@@ -81,7 +76,7 @@ public class CreateUserTask extends UserManagementTask {
     }
 
     @Override
-    protected Optional<UserOperationResult> getResult() {
-        return client.createUser(getUsername(), getPassword(), getJob());
+    protected Optional<OrowanOperationResult> getResult() {
+        return getClient().createUser(getUsername(), getPassword(), getJob());
     }
 }

@@ -4,9 +4,13 @@ import fr.sos.projetmines.CurvePoint;
 import fr.sos.projetmines.gui.util.LiveDataTask;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.CacheHint;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.shape.Rectangle;
+import javafx.util.StringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +18,8 @@ public class WorkerController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
     private final LiveDataTask service;
+    private final Node shape = new Rectangle(0,0,0,0);
+    private final StringConverter<Number> xAxisConverter;
 
     @FXML
     private LineChart<Float, Float> frictionChart;
@@ -34,10 +40,20 @@ public class WorkerController {
     public WorkerController() {
         service = new LiveDataTask();
         service.setController(this);
-        service.setHost(OrowanController.getInstance().getHost());
-        service.setPort(OrowanController.getInstance().getPort() + 1);
         //service.setOnFailed(event -> service.restart());
         service.start();
+
+        xAxisConverter = new StringConverter<>() {
+            @Override
+            public String toString(Number value) {
+                return String.format("%.1f s", value.floatValue());
+            }
+
+            @Override
+            public Float fromString(String string) {
+                return null;
+            }
+        };
     }
 
     public void closeScene() {
@@ -45,18 +61,16 @@ public class WorkerController {
     }
 
     public void addPointToPlot(CurvePoint curvePoint) {
-        float realTime = curvePoint.getXTime() / 1000f;
-        LOGGER.debug("Real time: {}", realTime);
+        float realTime = curvePoint.getXTime();
         if (frictionChart.getData().size() == 0) {
             Platform.runLater(() -> {
-                xAxisFriction.setLowerBound(realTime);
-                xAxisFriction.setForceZeroInRange(false);
+                configureXAxis(xAxisFriction, realTime);
                 yAxisFriction.setForceZeroInRange(false);
-                xAxisRollSpeed.setLowerBound(realTime);
-                xAxisRollSpeed.setForceZeroInRange(false);
+
+                configureXAxis(xAxisRollSpeed, realTime);
                 yAxisRollSpeed.setForceZeroInRange(false);
-                xAxisSigma.setLowerBound(realTime);
-                xAxisSigma.setForceZeroInRange(false);
+
+                configureXAxis(xAxisSigma, realTime);
                 yAxisSigma.setForceZeroInRange(false);
 
                 frictionChart.getData().add(new XYChart.Series<>());
@@ -67,15 +81,22 @@ public class WorkerController {
 
         Platform.runLater(() -> {
             // set the data for each LineChart
-            XYChart.Series<Float, Float> frictionSerie = frictionChart.getData().get(0);
-            frictionSerie.getData().add(new XYChart.Data<>(realTime, curvePoint.getFrictionCoefficient()));
-
-            XYChart.Series<Float, Float> rollSpeedSerie = rollSpeedChart.getData().get(0);
-            rollSpeedSerie.getData().add(new XYChart.Data<>(realTime, curvePoint.getRollSpeed()));
-
-            XYChart.Series<Float, Float> sigmaSerie = sigmaChart.getData().get(0);
-            sigmaSerie.getData().add(new XYChart.Data<>(realTime, curvePoint.getSigma()));
+            addDataToChart(frictionChart, realTime, curvePoint.getFrictionCoefficient(), "orange");
+            addDataToChart(rollSpeedChart, realTime, curvePoint.getRollSpeed(), "green");
+            addDataToChart(sigmaChart, realTime, curvePoint.getSigma(), "blue");
         });
+    }
+    private void addDataToChart(LineChart<Float, Float> lineChart, float x, float y, String color){
+        XYChart.Data<Float, Float> data = new XYChart.Data<>(x, y);
+        data.setNode(shape);
+        lineChart.getData().get(0).getNode().lookup(".chart-series-line").setStyle("-fx-stroke: " + color + ";");
+        lineChart.getData().get(0).getData().add(data);
+    }
+
+    private void configureXAxis(NumberAxis axis, float lowerBound){
+        axis.setLowerBound(lowerBound);
+        axis.setForceZeroInRange(false);
+        axis.setTickLabelFormatter(xAxisConverter);
     }
 
 }

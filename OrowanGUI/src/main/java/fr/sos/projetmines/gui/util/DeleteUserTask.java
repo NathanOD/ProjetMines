@@ -1,6 +1,6 @@
 package fr.sos.projetmines.gui.util;
 
-import fr.sos.projetmines.UserOperationResult;
+import fr.sos.projetmines.OrowanOperationResult;
 import fr.sos.projetmines.gui.rpc.UserManagementClient;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -14,10 +14,6 @@ public class DeleteUserTask extends UserManagementTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateUserTask.class);
 
     private final StringProperty username = new SimpleStringProperty();
-
-    public DeleteUserTask(UserManagementClient client) {
-        super(client);
-    }
 
     public String getUsername() {
         return username.getValue();
@@ -42,8 +38,8 @@ public class DeleteUserTask extends UserManagementTask {
     }
 
     @Override
-    protected Optional<UserOperationResult> getResult() {
-        return client.deleteUser(getUsername());
+    protected Optional<OrowanOperationResult> getResult() {
+        return getClient().deleteUser(getUsername());
     }
 
 }

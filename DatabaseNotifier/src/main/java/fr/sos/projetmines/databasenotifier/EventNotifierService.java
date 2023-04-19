@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,11 +37,13 @@ public class EventNotifierService extends EventNotifierGrpc.EventNotifierImplBas
     public void onEvent(Map<String, ?> eventData) {
         EventNotification data = EventNotification.newBuilder()
                 .setEntryId((int) eventData.get("entryId")).build();
-        for (StreamObserver<EventNotification> responseObserver : responses) {
+        Iterator<StreamObserver<EventNotification>> respIter = responses.iterator();
+        while(respIter.hasNext()){
+            StreamObserver<EventNotification> stream = respIter.next();
             try {
-                responseObserver.onNext(data);
+                stream.onNext(data);
             } catch (StatusRuntimeException exception) {
-                responses.remove(responseObserver);
+                respIter.remove();
             }
         }
     }

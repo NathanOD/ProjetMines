@@ -1,9 +1,10 @@
 package fr.sos.projetmines.gui.util;
 
 import fr.sos.projetmines.OperationResult;
-import fr.sos.projetmines.UserOperationResult;
+import fr.sos.projetmines.OrowanOperationResult;
 import fr.sos.projetmines.gui.rpc.UserManagementClient;
-import io.grpc.ManagedChannel;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -17,10 +18,20 @@ public abstract class UserManagementTask extends Service<OperationResult> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementTask.class);
 
-    protected final UserManagementClient client;
+    // ---- UserManagementClient
 
-    public UserManagementTask(UserManagementClient client) {
-        this.client = client;
+    private ObjectProperty<UserManagementClient> client = new SimpleObjectProperty<>();
+    public ObjectProperty<UserManagementClient> client() {
+        return client;
+    }
+    public UserManagementClient getClient() {
+        return client.getValue();
+    }
+    public void setClient(UserManagementClient newClient) {
+        this.client.set(newClient);
+    }
+    public ObjectProperty<UserManagementClient> controller() {
+        return client;
     }
 
     @Override
@@ -29,7 +40,7 @@ public abstract class UserManagementTask extends Service<OperationResult> {
             @Override
             protected OperationResult call() throws Exception {
                 try {
-                    Optional<UserOperationResult> resultOpt = getResult();
+                    Optional<OrowanOperationResult> resultOpt = getResult();
                     if (resultOpt.isPresent() && resultOpt.get().getResult() == OperationResult.SUCCESSFUL) {
                         successLog();
                         return resultOpt.get().getResult();
@@ -40,7 +51,7 @@ public abstract class UserManagementTask extends Service<OperationResult> {
                     }
                 } finally {
                     try {
-                        client.getChannel().shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+                        getClient().getChannel().shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
                     } catch (InterruptedException e) {
                         LOGGER.error(e.getMessage());
                     }
@@ -53,6 +64,6 @@ public abstract class UserManagementTask extends Service<OperationResult> {
 
     protected abstract void failLog();
 
-    protected abstract Optional<UserOperationResult> getResult();
+    protected abstract Optional<OrowanOperationResult> getResult();
 
 }

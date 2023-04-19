@@ -2,14 +2,11 @@ syntax = "proto3";
 option java_package = "fr.sos.projetmines";
 option java_multiple_files = true;
 
+import "OrowanOperation.proto";
+
 message OrowanUserCredentials {
   string username = 1;
   string password = 2;
-}
-
-enum ConnectionResult {
-  LOGIN_SUCCESSFUL = 0;
-  WRONG_CREDENTIALS = 1;
 }
 
 enum Job {
@@ -18,7 +15,7 @@ enum Job {
 }
 
 message OrowanConnectionResult {
-  ConnectionResult result = 1;
+  OperationResult result = 1;
   Job user_job = 2;
 }
 

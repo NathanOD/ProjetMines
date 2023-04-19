@@ -1,7 +1,7 @@
 package fr.sos.projetmines.gui.util;
 
 import fr.sos.projetmines.Job;
-import fr.sos.projetmines.UserOperationResult;
+import fr.sos.projetmines.OrowanOperationResult;
 import fr.sos.projetmines.gui.rpc.UserManagementClient;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,9 +17,6 @@ public class UpdateUserJobTask extends UserManagementTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateUserTask.class);
     private final StringProperty username = new SimpleStringProperty();
     private final ObjectProperty<Job> job = new SimpleObjectProperty<>();
-    public UpdateUserJobTask(UserManagementClient client) {
-        super(client);
-    }
 
     public String getUsername() {
         return username.getValue();
@@ -56,8 +53,8 @@ public class UpdateUserJobTask extends UserManagementTask {
     }
 
     @Override
-    protected Optional<UserOperationResult> getResult() {
-        return client.updateUserJob(getUsername(), getJob());
+    protected Optional<OrowanOperationResult> getResult() {
+        return getClient().updateUserJob(getUsername(), getJob());
     }
 
 }

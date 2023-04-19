@@ -31,9 +31,9 @@
                       <ChoiceBox fx:id="engineerUserManagementChoice" prefWidth="200.0" />
                   <HBox alignment="CENTER" spacing="5.0">
                      <children>
-                            <Button fx:id="engineerDeleteUser" mnemonicParsing="false" text="Delete User" />
-                            <Button fx:id="engineerPromoteUser" mnemonicParsing="false" text="Set Admin" />
-                            <Button fx:id="engineerDemoteUser" mnemonicParsing="false" text="Set Worker" />
+                            <Button fx:id="engineerDeleteUser" mnemonicParsing="false" text="Delete User" onMouseClicked="#deleteUser" />
+                            <Button fx:id="engineerPromoteUser" mnemonicParsing="false" text="Set Admin"  onMouseClicked="#promoteUser" />
+                            <Button fx:id="engineerDemoteUser" mnemonicParsing="false" text="Set Worker"  onMouseClicked="#demoteUser" />
                      </children>
                   </HBox>
                </children>

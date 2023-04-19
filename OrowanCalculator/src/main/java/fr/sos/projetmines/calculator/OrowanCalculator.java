@@ -4,6 +4,7 @@ import fr.sos.projetmines.calculator.database.CalculatorDatabaseFacade;
 import fr.sos.projetmines.calculator.model.OrowanDataOutput;
 import fr.sos.projetmines.calculator.rpc.CalculatorServers;
 import fr.sos.projetmines.calculator.rpc.DatabaseNotifierClient;
+import fr.sos.projetmines.calculator.util.DataFormatter;
 import fr.sos.projetmines.commonutils.config.*;
 import fr.sos.projetmines.commonutils.event.OEventBroadcaster;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class OrowanCalculator {
     private final Configuration config;
     private final CalculatorDatabaseFacade database;
     private final OEventBroadcaster dataInputBroadcaster;
+
+    private final DataFormatter dataFormatter;
     //-----------
 
     private OrowanCalculator() {
@@ -32,6 +35,7 @@ public class OrowanCalculator {
         if (configOpt.isEmpty()) {
             this.config = null;
             this.database = null;
+            this.dataFormatter = null;
             return;
         }
         this.config = configOpt.get();
@@ -39,9 +43,13 @@ public class OrowanCalculator {
         Optional<CalculatorDatabaseFacade> databaseOpt = getDatabaseConnection();
         if (databaseOpt.isEmpty()) {
             this.database = null;
+            this.dataFormatter = null;
             return;
         }
         this.database = databaseOpt.get();
+
+        this.dataFormatter = new DataFormatter();
+        dataFormatter.initializeInputRanges();
         //simulateData();
         startRPCConnections();
     }
@@ -143,4 +151,9 @@ public class OrowanCalculator {
     public OEventBroadcaster getDataInputBroadcaster() {
         return dataInputBroadcaster;
     }
+
+    public DataFormatter getDataFormatter() {
+        return dataFormatter;
+    }
+
 }

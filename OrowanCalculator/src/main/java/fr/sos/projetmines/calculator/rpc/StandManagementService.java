@@ -11,20 +11,13 @@ public class StandManagementService extends StandManagementGrpc.StandManagementI
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StandManagementService.class);
 
-    private final CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
-
     @Override
-    public void newStand(OrowanNewStand request, StreamObserver<StandCreationResult> responseObserver) {
-        super.newStand(request, responseObserver);
-        /*
-        LOGGER.debug("Received an user creation request.");
-
-
-         */
+    public void enableStand(StandEnablingRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
+        super.enableStand(request, responseObserver);
     }
 
     @Override
-    public void deleteStand(OrowanDeleteStand request, StreamObserver<StandDeleteResult> responseObserver) {
-        super.deleteStand(request, responseObserver);
+    public void disableStand(StandDisablingRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
+        super.disableStand(request, responseObserver);
     }
 }

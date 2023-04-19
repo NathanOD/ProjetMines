@@ -9,10 +9,11 @@ public class CalculatorServers {
     private final OrowanRPCServer[] servers;
 
     public CalculatorServers(int port) {
-        servers = new OrowanRPCServer[3];
+        servers = new OrowanRPCServer[4];
         servers[0] = new OrowanRPCServer(port, "Authenticator", new OrowanAuthenticatorService());
         servers[1] = new OrowanRPCServer(port + 1, "LiveData", new OrowanLiveDataService());
         servers[2] = new OrowanRPCServer(port + 3, "UserManagement", new UserManagementService());
+        servers[3] = new OrowanRPCServer(port + 4, "InputRangeEditor", new InputRangeEditorService());
     }
 
     public void startServers() throws IOException {

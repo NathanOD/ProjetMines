@@ -1,7 +1,7 @@
 package fr.sos.projetmines.gui.util;
 
-import fr.sos.projetmines.ConnectionResult;
 import fr.sos.projetmines.Job;
+import fr.sos.projetmines.OperationResult;
 import fr.sos.projetmines.OrowanConnectionResult;
 import fr.sos.projetmines.gui.controller.OrowanController;
 import fr.sos.projetmines.gui.rpc.OrowanAuthenticatorClient;
@@ -28,6 +28,8 @@ public class AuthenticatorTask extends Service<Job> {
 
     private final StringProperty username = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
+    private final StringProperty host = new SimpleStringProperty();
+    private final IntegerProperty port = new SimpleIntegerProperty();
 
     public String getUsername() {
         return username.getValue();
@@ -53,8 +55,6 @@ public class AuthenticatorTask extends Service<Job> {
         return password;
     }
 
-    private final StringProperty host = new SimpleStringProperty();
-
     public String getHost() {
         return host.getValue();
     }
@@ -66,7 +66,6 @@ public class AuthenticatorTask extends Service<Job> {
     public StringProperty host() {
         return host;
     }
-    private final IntegerProperty port = new SimpleIntegerProperty();
 
     public int getPort() {
         return port.getValue();
@@ -87,11 +86,11 @@ public class AuthenticatorTask extends Service<Job> {
             @Override
             protected Job call() throws Exception {
                 ManagedChannel channel = Grpc.newChannelBuilderForAddress(getHost(),
-                                getPort(), InsecureChannelCredentials.create()).build();
+                        getPort(), InsecureChannelCredentials.create()).build();
                 try {
                     OrowanAuthenticatorClient client = new OrowanAuthenticatorClient(channel);
                     Optional<OrowanConnectionResult> resultOpt = client.sendConnectionRequest(getUsername(), getPassword());
-                    if (resultOpt.isPresent() && resultOpt.get().getResult() == ConnectionResult.LOGIN_SUCCESSFUL) {
+                    if (resultOpt.isPresent() && resultOpt.get().getResult() == OperationResult.SUCCESSFUL) {
                         OrowanController.getInstance().setHost(getHost());
                         OrowanController.getInstance().setPort(getPort());
                         return resultOpt.get().getUserJob();

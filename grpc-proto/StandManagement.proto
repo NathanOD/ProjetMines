@@ -2,31 +2,17 @@ syntax = "proto3";
 option java_package = "fr.sos.projetmines";
 option java_multiple_files = true;
 
-message OrowanNewStand {
-  int32 ID = 1;
+import "OrowanOperation.proto";
+
+message StandEnablingRequest {
+  int32 standId = 1;
 }
 
-message StandCreationResult {
-  enum CreationResult {
-    CREATION_SUCCESSFUL = 0;
-    CREATION_FAILED = 1;
-  }
-  CreationResult result = 1;
-}
-
-message OrowanDeleteStand {
-  int32 ID = 1;
-}
-
-message StandDeleteResult {
-  enum DeleteResult {
-    DELETE_SUCCESSFUL = 0;
-    DELETE_FAILED = 1;
-  }
-  DeleteResult result = 1;
+message StandDisablingRequest {
+  int32 standId = 1;
 }
 
 service StandManagement {
-  rpc NewStand (OrowanNewStand) returns (StandCreationResult);
-  rpc DeleteStand (OrowanDeleteStand) returns (StandDeleteResult);
+  rpc EnableStand (StandEnablingRequest) returns (OrowanOperationResult);
+  rpc DisableStand (StandDisablingRequest) returns (OrowanOperationResult);
 }

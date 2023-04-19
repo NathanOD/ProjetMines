@@ -16,7 +16,7 @@ public class OrowanDataOutput {
     private final String hasConverged;
     private long computationTime;
     private float rollSpeed;
-    private long xTime;
+    private float xTime;
 
     public OrowanDataOutput(int caseId, String errors, float offsetYield, float friction, float rollingTorque,
                             float sigmaMoy, float sigmaIni, float sigmaOut, float sigmaMax, float forceError,
@@ -99,11 +99,11 @@ public class OrowanDataOutput {
         this.rollSpeed = newRollSpeed;
     }
 
-    public long getXTime() {
+    public float getXTime() {
         return xTime;
     }
 
-    public void setXTime(long xTime) {
+    public void setXTime(float xTime) {
         this.xTime = xTime;
     }
 }

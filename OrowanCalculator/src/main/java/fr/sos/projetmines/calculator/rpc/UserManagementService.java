@@ -8,6 +8,9 @@ import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+import java.util.Set;
+
 
 public class UserManagementService extends UserManagementGrpc.UserManagementImplBase {
 
@@ -16,50 +19,64 @@ public class UserManagementService extends UserManagementGrpc.UserManagementImpl
     private final CalculatorDatabaseFacade database = OrowanCalculator.getInstance().getDatabase();
 
     @Override
-    public void createUser(UserCreationRequest request, StreamObserver<UserOperationResult> responseObserver) {
+    public void createUser(UserCreationRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
         LOGGER.debug("Received an user creation request.");
         byte[] salt = DataFormatter.generateSalt();
         byte[] passwordHash = DataFormatter.hashPassword(request.getPassword(), salt);
 
-        UserOperationResult result = null;
+        OrowanOperationResult result = null;
         if (!database.checkUserExistence(request.getUsername())) {
             //If the user does not already exist then creates
             database.addUser(request.getUsername(), passwordHash, salt, request.getJob());
-            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         } else {
             //If the user is already registered
-            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         }
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void deleteUser(UserDeletionRequest request, StreamObserver<UserOperationResult> responseObserver) {
-        UserOperationResult result = null;
+    public void deleteUser(UserDeletionRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
+        OrowanOperationResult result = null;
         if (database.checkUserExistence(request.getUsername())) {
             //If the user exists then delete
             database.deleteUser(request.getUsername());
-            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         } else {
             //If the user does not exist
-            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         }
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void setUserJob(UserJobUpdateRequest request, StreamObserver<UserOperationResult> responseObserver) {
-        UserOperationResult result = null;
+    public void setUserJob(UserJobUpdateRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
+        OrowanOperationResult result = null;
         if (!database.checkUserExistence(request.getUsername())) {
             // If the user exists
-            result = UserOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.FAIL).build();
         } else {
             database.setUserJob(request.getUsername(), request.getJob());
-            result = UserOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
+            result = OrowanOperationResult.newBuilder().setResult(OperationResult.SUCCESSFUL).build();
         }
         responseObserver.onNext(result);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void listUsers(ListUsersRequest request, StreamObserver<OrowanUserCredentials> responseObserver) {
+        Optional<Set<String>> usernamesOpt = database.getUsers();
+        if (usernamesOpt.isEmpty()) {
+            responseObserver.onCompleted();
+            return;
+        }
+        for (String username : usernamesOpt.get()) {
+            OrowanUserCredentials credentials = OrowanUserCredentials.newBuilder().setUsername(username).build();
+            responseObserver.onNext(credentials);
+        }
         responseObserver.onCompleted();
     }
 }

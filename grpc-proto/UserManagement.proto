@@ -3,6 +3,7 @@ option java_package = "fr.sos.projetmines";
 option java_multiple_files = true;
 
 import "OrowanAuthenticator.proto";
+import "OrowanOperation.proto";
 
 message UserCreationRequest {
   string username = 1;
@@ -19,18 +20,9 @@ message UserJobUpdateRequest {
   Job job = 2;
 }
 
-enum OperationResult {
-  SUCCESSFUL = 0;
-  FAIL = 1;
-}
-
-message UserOperationResult {
-    OperationResult result = 1;
-}
-
-
 service UserManagement {
-  rpc CreateUser (UserCreationRequest) returns (UserOperationResult);
-  rpc DeleteUser (UserDeletionRequest) returns (UserOperationResult);
-  rpc SetUserJob (UserJobUpdateRequest) returns (UserOperationResult);
+  rpc CreateUser (UserCreationRequest) returns (OrowanOperationResult);
+  rpc DeleteUser (UserDeletionRequest) returns (OrowanOperationResult);
+  rpc SetUserJob (UserJobUpdateRequest) returns (OrowanOperationResult);
+  rpc ListUsers (ListUsersRequest) returns (stream OrowanUserCredentials);
 }

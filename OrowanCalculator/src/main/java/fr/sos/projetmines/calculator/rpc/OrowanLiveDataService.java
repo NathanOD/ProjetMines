@@ -12,10 +12,7 @@ import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class OrowanLiveDataService extends OrowanLiveDataProviderGrpc.OrowanLiveDataProviderImplBase
         implements OEventListener {
@@ -49,21 +46,21 @@ public class OrowanLiveDataService extends OrowanLiveDataProviderGrpc.OrowanLive
         OrowanDataOutput output = (OrowanDataOutput) eventData.get("output");
         //Check for stand clients existence
         if (curveDataResponses.containsKey(standId)) {
+            CurvePoint point = CurvePoint.newBuilder()
+                    .setComputationTime(output.getComputationTime())
+                    .setSigma(output.getSigmaMoy())
+                    .setFrictionCoefficient(output.getFriction())
+                    .setRollSpeed(output.getRollSpeed())
+                    .setXTime(output.getXTime())
+                    .build();
             //For each client clients
-            for (StreamObserver<CurvePoint> response : curveDataResponses.get(standId)) {
+            Iterator<StreamObserver<CurvePoint>> respIter = curveDataResponses.get(standId).iterator();
+            while (respIter.hasNext()) {
+                StreamObserver<CurvePoint> stream = respIter.next();
                 try {
-                    // Send the new CurvePoint
-                    CurvePoint point = CurvePoint.newBuilder()
-                            .setComputationTime(output.getComputationTime())
-                            .setSigma(output.getSigmaMoy())
-                            .setFrictionCoefficient(output.getFriction())
-                            .setRollSpeed(output.getRollSpeed())
-                            .setXTime(output.getXTime())
-                            .build();
-                    response.onNext(point);
-                } catch (StatusRuntimeException | NullPointerException exception) {
-                    // Remove the connection from the set if an error occures
-                    curveDataResponses.get(standId).remove(response);
+                    stream.onNext(point);
+                } catch (StatusRuntimeException exception) {
+                    respIter.remove();
                 }
             }
         }

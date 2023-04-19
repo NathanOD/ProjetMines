@@ -1,0 +1,12 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+enum OperationResult {
+  SUCCESSFUL = 0;
+  FAIL = 1;
+}
+
+message OrowanOperationResult {
+  OperationResult result = 1;
+}

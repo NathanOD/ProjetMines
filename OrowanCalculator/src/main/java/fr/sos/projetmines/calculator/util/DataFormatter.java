@@ -1,7 +1,9 @@
 package fr.sos.projetmines.calculator.util;
 
 import fr.sos.projetmines.calculator.OrowanCalculator;
+import fr.sos.projetmines.calculator.database.CalculatorDatabaseFacade;
 import fr.sos.projetmines.calculator.model.OrowanDataOutput;
+import fr.sos.projetmines.calculator.model.OrowanInputDataRange;
 import fr.sos.projetmines.calculator.model.OrowanSensorData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +15,19 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public class DataFormatter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFormatter.class);
+    private final Map<String, OrowanInputDataRange> inputRanges;
+
+    private final CalculatorDatabaseFacade database;
+
+    public DataFormatter() {
+        this.inputRanges = new HashMap<>();
+        this.database = OrowanCalculator.getInstance().getDatabase();
+    }
 
     /**
      * @param pass password to hash
@@ -38,6 +47,7 @@ public class DataFormatter {
 
     /**
      * Generates a random salt for password hashing
+     *
      * @return the generated salt
      */
     public static byte[] generateSalt() {
@@ -47,22 +57,41 @@ public class DataFormatter {
         return salt;
     }
 
+    public void initializeInputRanges() {
+        Set<OrowanInputDataRange> remoteInputRanges = database.getInputRanges();
+        for (OrowanInputDataRange inputRange : remoteInputRanges) {
+            inputRanges.put(inputRange.getConstraintName(), inputRange);
+        }
+    }
+
+    public void updateDataRange(String constraintName, float minValue, float maxValue) {
+        if (inputRanges.containsKey(constraintName)) {
+            OrowanInputDataRange dataRange = inputRanges.get(constraintName);
+            dataRange.setMinValue(minValue);
+            dataRange.setMaxValue(maxValue);
+
+            database.updateConstraintInputRange(dataRange);
+        }
+    }
+
     /**
      * Takes the sensor input with id entryId from the database and writes it to the input.txt file for orowan software
+     *
      * @param entryId id of the entry in the database
      * @return whether the execution was successful
      */
     public Optional<OrowanSensorData> sensorDataToFile(int entryId) {
-        Optional<OrowanSensorData> dataOpt = OrowanCalculator.getInstance().getDatabase().retrieveSensorData(entryId);;
-        if(dataOpt.isEmpty()){
+        Optional<OrowanSensorData> dataOpt = database.retrieveSensorData(entryId);
+        if (dataOpt.isEmpty()) {
             return dataOpt;
         }
+        Path inputFilePath = Path.of(System.getProperty("user.dir"), "input.txt");
+
         OrowanSensorData data = dataOpt.get();
         DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
         otherSymbols.setDecimalSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("#0.000", otherSymbols);
         try {
-            Path inputFilePath = Path.of(System.getProperty("user.dir"), "input.txt");
             File inputFile = inputFilePath.toFile();
             if (!inputFile.exists()) {
                 inputFile.createNewFile();
@@ -82,6 +111,7 @@ public class DataFormatter {
             writeDouble(pw, data.getMu(), true, decimalFormat);
             writeDouble(pw, data.getRollForce(), true, decimalFormat);
             writeDouble(pw, data.getForwardSlip(), false, decimalFormat);
+            pw.close();
             return dataOpt;
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,6 +121,7 @@ public class DataFormatter {
 
     /**
      * Retrieves the data from Orowan computation in the provided file and saves it to the database
+     *
      * @param orowanOutput Orowan output file path
      */
     public Optional<OrowanDataOutput> saveOrowanOutputToDatabase(Path orowanOutput) {
@@ -121,7 +152,7 @@ public class DataFormatter {
                     sigmaIni, sigmaOut, sigmaMax, forceError, slipError, columns[11]);
 
             bufferedReader.close();
-            OrowanCalculator.getInstance().getDatabase().saveOrowanOutput(output);
+            database.saveOrowanOutput(output);
             return Optional.of(output);
         } catch (IOException exception) {
             LOGGER.error(exception.getMessage());
@@ -131,6 +162,7 @@ public class DataFormatter {
 
     /**
      * Starts the Orowan software with the correct parameters: i | c | input.txt | output.txt
+     *
      * @param orowanPath
      */
     public void runOrowan(Path orowanPath) {
@@ -167,9 +199,13 @@ public class DataFormatter {
         }
     }
 
-    private void writeDouble(PrintWriter printWriter, double value, boolean splitting, DecimalFormat format){
+    private void writeDouble(PrintWriter printWriter, double value, boolean splitting, DecimalFormat format) {
         printWriter.print(format.format(value));
-        if(splitting)
+        if (splitting)
             printWriter.print('\t');
+    }
+
+    public Map<String, OrowanInputDataRange> getInputDataRanges() {
+        return inputRanges;
     }
 }

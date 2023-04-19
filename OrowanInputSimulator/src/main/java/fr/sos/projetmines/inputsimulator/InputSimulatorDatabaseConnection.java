@@ -75,34 +75,12 @@ public class InputSimulatorDatabaseConnection {
      * Creates the table into the database if it does not exist.
      * Does nothing if the connection to the database is not initialized
      */
-    public void insertData(StripDataEntry entry, boolean saveStrip) {
+    public void insertData(StripDataEntry entry) {
         if (!isConnected()) {
             LOGGER.warn("Impossible to query the database: the connection is not established");
             return;
         }
         try {
-            if (saveStrip) {
-                String exists = "SELECT stand_id FROM STRIPS WHERE strip_id = ?";
-                PreparedStatement statement = connection.prepareStatement(exists);
-                statement.setInt(1, entry.getStrip().getStripId());
-                if (!statement.executeQuery().next()) {
-                    String stripInsertion = "INSERT INTO STRIPS (strip_id, stand_id, work_roll_diameter, rolled_length, " +
-                            "young_modulus, backup_roll_diameter, backup_rolled_length) VALUES (?,?,?,?,?,?,?)";
-                    Strip strip = entry.getStrip();
-
-                    PreparedStatement stripCreation = connection.prepareStatement(stripInsertion);
-                    stripCreation.setInt(1, strip.getStripId());
-                    stripCreation.setInt(2, strip.getStandId());
-                    stripCreation.setFloat(3, strip.getWorkRollDiameter());
-                    stripCreation.setFloat(4, strip.getRolledLength());
-                    stripCreation.setFloat(5, strip.getYoungModulus());
-                    stripCreation.setFloat(6, strip.getBackupRollDiameter());
-                    stripCreation.setFloat(7, strip.getBackupRolledLength());
-                    stripCreation.executeUpdate();
-                    LOGGER.debug("Saved a new strip into the database!");
-                }
-            }
-
             String dataEntry = "INSERT INTO INPUT_OROWAN (input_error, lp, mat_id, x_time, x_loc, entry_thickness, exit_thickness, " +
                     "entry_tension, exit_tension, roll_force, forward_slip, mu, torque, average_sigma, " +
                     "water_flow_rate_top, water_flow_rate_bottom, oil_flow_rate_top, oil_flow_rate_down, roll_speed) " +
@@ -131,6 +109,57 @@ public class InputSimulatorDatabaseConnection {
 
             dataEntryStatement.executeUpdate();
             dataEntryStatement.close();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+    public void insertStrip(Strip strip) {
+        if (!isConnected()) {
+            LOGGER.warn("Impossible to query the database: the connection is not established");
+            return;
+        }
+        try {
+            String exists = "SELECT stand_id FROM STRIPS WHERE strip_id = ?";
+            PreparedStatement statement = connection.prepareStatement(exists);
+            statement.setInt(1, strip.getStripId());
+            if (!statement.executeQuery().next()) {
+                String stripInsertion = "INSERT INTO STRIPS (strip_id, stand_id, work_roll_diameter, rolled_length, " +
+                        "young_modulus, backup_roll_diameter, backup_rolled_length) VALUES (?,?,?,?,?,?,?)";
+
+                PreparedStatement stripCreation = connection.prepareStatement(stripInsertion);
+                stripCreation.setInt(1, strip.getStripId());
+                stripCreation.setInt(2, strip.getStandId());
+                stripCreation.setFloat(3, strip.getWorkRollDiameter());
+                stripCreation.setFloat(4, strip.getRolledLength());
+                stripCreation.setFloat(5, strip.getYoungModulus());
+                stripCreation.setFloat(6, strip.getBackupRollDiameter());
+                stripCreation.setFloat(7, strip.getBackupRolledLength());
+                stripCreation.executeUpdate();
+                LOGGER.debug("Saved a new strip into the database!");
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+    public void insertStand(int standId) {
+        if (!isConnected()) {
+            LOGGER.warn("Impossible to query the database: the connection is not established");
+            return;
+        }
+        try {
+            String exists = "SELECT stand_id FROM stands WHERE stand_id = ?";
+            PreparedStatement statement = connection.prepareStatement(exists);
+            statement.setInt(1, standId);
+            if (!statement.executeQuery().next()) {
+                String standInsertionQuery = "INSERT INTO stands (stand_id, enabled) VALUES (?, ?)";
+                PreparedStatement standInsertion = connection.prepareStatement(standInsertionQuery);
+                standInsertion.setInt(1, standId);
+                standInsertion.setBoolean(2, true);
+                standInsertion.executeUpdate();
+                LOGGER.debug("Saved a new stand into the database!");
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }

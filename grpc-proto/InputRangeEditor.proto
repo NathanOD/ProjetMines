@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+import "OrowanOperation.proto";
+
+message InputRangeEditRequest {
+  string constraintName = 1;
+  float minValue = 2;
+  float maxValue = 3;
+}
+
+service InputRangeEditor {
+  rpc EditInputRange (InputRangeEditRequest) returns (OrowanOperationResult);
+}

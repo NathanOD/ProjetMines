@@ -22,6 +22,7 @@ class UserManagingRequests {
 
     /**
      * Gets the job of a user
+     *
      * @param username Name of the user
      * @return the user Job if the user is found
      */
@@ -36,7 +37,9 @@ class UserManagingRequests {
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(Job.valueOf(resultSet.getString("job")));
+                Job job = Job.valueOf(resultSet.getString("job"));
+                statement.close();
+                return Optional.of(job);
             }
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
@@ -46,8 +49,9 @@ class UserManagingRequests {
 
     /**
      * Updates the role of an existing user
+     *
      * @param username Name of the user
-     * @param job new job value
+     * @param job      new job value
      */
     public void setUserJob(String username, Job job) {
         if (!database.isConnected()) {
@@ -59,6 +63,7 @@ class UserManagingRequests {
             PreparedStatement statement = database.getConnection().prepareStatement(jobQuery);
             statement.setString(1, job.name());
             statement.setString(2, username);
+            statement.close();
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
         }
@@ -67,10 +72,11 @@ class UserManagingRequests {
 
     /**
      * Adds a user to the database
+     *
      * @param username name of the new user
      * @param password password of the new user (40 bytes max: sha-256)
-     * @param salt salt of the new user (16 Bytes)
-     * @param job user job
+     * @param salt     salt of the new user (16 Bytes)
+     * @param job      user job
      */
     public void addUser(String username, byte[] password, byte[] salt, Job job) {
         if (!database.isConnected()) {
@@ -94,6 +100,7 @@ class UserManagingRequests {
 
     /**
      * Deletes a user from the database
+     *
      * @param username Name of the user to delete
      */
     public void deleteUser(String username) {

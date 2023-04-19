@@ -35,8 +35,10 @@ class AuthenticatorRequests {
             if (resultSet.next()) {
                 byte[] password = resultSet.getBytes("password_hash");
                 byte[] salt = resultSet.getBytes("salt");
+                statement.close();
                 return new byte[][]{password, salt};
             }
+            statement.close();
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
         }
@@ -59,6 +61,7 @@ class AuthenticatorRequests {
             ResultSet resultSet = statement.executeQuery();
             resultSet.first();
             int result = resultSet.getInt(0);
+            statement.close();
             return result >= 1;
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
