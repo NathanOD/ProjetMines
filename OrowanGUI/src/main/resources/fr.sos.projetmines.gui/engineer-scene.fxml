@@ -48,7 +48,7 @@
                         <ChoiceBox fx:id="engineerAddUserJob" prefHeight="0.0" prefWidth="200.0" />
                      </children>
                   </VBox>
-                      <Button fx:id="engineerAddUser" mnemonicParsing="false" text="Add User" />
+                      <Button fx:id="engineerAddUser" mnemonicParsing="false" text="Add User" onMouseClicked="#createUser"/>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" maxHeight="115.0" minHeight="100.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">

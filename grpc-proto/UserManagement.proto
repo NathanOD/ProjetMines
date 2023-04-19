@@ -20,6 +20,10 @@ message UserJobUpdateRequest {
   Job job = 2;
 }
 
+message ListUsersRequest {
+
+}
+
 service UserManagement {
   rpc CreateUser (UserCreationRequest) returns (OrowanOperationResult);
   rpc DeleteUser (UserDeletionRequest) returns (OrowanOperationResult);

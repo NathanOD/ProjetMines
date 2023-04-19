@@ -1,6 +1,7 @@
 package fr.sos.projetmines.calculator.database;
 
 import fr.sos.projetmines.Job;
+import fr.sos.projetmines.OrowanUserCredentials;
 import fr.sos.projetmines.commonutils.database.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.*;
 
 class UserManagingRequests {
 
@@ -118,5 +119,28 @@ class UserManagingRequests {
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+    }
+
+    public Optional<Set<String>> getUsers() {
+        if (!database.isConnected()) {
+            LOGGER.warn("Impossible to query the database: the connection is not established");
+            return Optional.empty();
+        }
+        try {
+            String addUserQuery = "SELECT username FROM orowan_users";
+            PreparedStatement addUserStatement = database.getConnection().prepareStatement(addUserQuery);
+            ResultSet resultSet = addUserStatement.executeQuery();
+            Set<String> users = new HashSet<>();
+
+            while (resultSet.next()) {
+                users.add(resultSet.getString("username"));
+            }
+
+            addUserStatement.close();
+            return Optional.of(users);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+        return Optional.empty();
     }
 }
