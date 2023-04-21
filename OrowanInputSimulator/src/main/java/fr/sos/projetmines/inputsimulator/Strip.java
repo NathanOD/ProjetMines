@@ -2,16 +2,14 @@ package fr.sos.projetmines.inputsimulator;
 
 public class Strip {
     private final int stripId;
-    private final int standId;
     private final float workRollDiameter;
     private final float rolledLength;
     private final float youngModulus;
     private final float backupRollDiameter;
     private final float backupRolledLength;
 
-    public Strip(int stripId, int standId, float workRollDiameter, float rolledLength, float youndModulus, float backupRollDiameter, float backupRolledLength) {
+    public Strip(int stripId, float workRollDiameter, float rolledLength, float youndModulus, float backupRollDiameter, float backupRolledLength) {
         this.stripId = stripId;
-        this.standId = standId;
         this.workRollDiameter = workRollDiameter;
         this.rolledLength = rolledLength;
         this.youngModulus = youndModulus;
@@ -21,10 +19,6 @@ public class Strip {
 
     public int getStripId() {
         return stripId;
-    }
-
-    public int getStandId() {
-        return standId;
     }
 
     public float getWorkRollDiameter() {

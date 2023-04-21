@@ -55,14 +55,16 @@ class AuthenticatorRequests {
         }
 
         try {
-            String dataQuery = "SELECT COUNT(username) FROM orowan_users WHERE username=?";
+            String dataQuery = "SELECT username FROM orowan_users WHERE username=?";
             PreparedStatement statement = database.getConnection().prepareStatement(dataQuery);
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.first();
-            int result = resultSet.getInt(0);
+            boolean exists = false;
+            if(resultSet.next()){
+                exists = true;
+            }
             statement.close();
-            return result >= 1;
+            return exists;
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
         }

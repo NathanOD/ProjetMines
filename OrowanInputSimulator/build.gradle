@@ -16,6 +16,10 @@ repositories {
 dependencies {
     // H2 Database driver
     implementation 'com.h2database:h2:2.1.214'
+
+
+    //Common utils
+    implementation project(':CommonUtils')
 }
 
 //-------------------- ARCHIVE GENERATION --------------------

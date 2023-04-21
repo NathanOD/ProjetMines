@@ -16,6 +16,7 @@ message CurvePoint {
 
 message FrictionCoefficient {
   float friction_coefficient = 1;
+  float x_time = 2;
 }
 
 service OrowanLiveDataProvider {

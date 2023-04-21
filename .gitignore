@@ -28,4 +28,5 @@ OrowanCalculator/config.properties
 DatabaseNotifier/config.properties
 OrowanCalculator/output.txt
 OrowanCalculator/intput.txt
+OrowanInputSimulator/Krakov
 utils/database_generation.sql

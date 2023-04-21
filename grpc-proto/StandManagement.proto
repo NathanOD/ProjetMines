@@ -12,7 +12,16 @@ message StandDisablingRequest {
   int32 standId = 1;
 }
 
+message StandListRequest {
+}
+
+message Stand {
+  int32 stand_id = 1;
+  bool enabled = 2;
+}
+
 service StandManagement {
   rpc EnableStand (StandEnablingRequest) returns (OrowanOperationResult);
   rpc DisableStand (StandDisablingRequest) returns (OrowanOperationResult);
+  rpc ListStands (StandListRequest) returns (stream Stand);
 }

@@ -22,6 +22,12 @@ public class DatabaseInserter {
         this.strips = new HashSet<>();
     }
 
+    /**
+     * Reads an inputFile and adds it to the database including a delay
+     * @param standId stand of the added values
+     * @param localInputFilePath path of the input values
+     * @throws IOException
+     */
     public void startInsertion(int standId, String localInputFilePath) throws IOException {
         InputStream inputCsv = getClass().getClassLoader().getResourceAsStream(localInputFilePath);
         if (inputCsv == null) {
@@ -31,28 +37,28 @@ public class DatabaseInserter {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputCsv));
         double lastTime = 0;
 
-        InputSimulatorDatabaseConnection dbConnection = InputSimulatorDatabaseConnection.getInstance();
+        InputSimulatorDatabaseConnection dbConnection = OrowanInputSimulator.getInstance().getDatabase();
         // On ouvre le fichier CSV
         bufferedReader.readLine(); // Skip header line
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            String[] columns = line.split("\t+");
+            String[] columns = line.split("\t+|;");
 
             int[] integerValues = new int[2];
-            float[] doubleValues = new float[columns.length - 3];
+            float[] doubleValues = new float[22];
             for (int i = 0; i < 2; i++)
-                integerValues[i] = Integer.parseInt(columns[i]);
+                integerValues[i] = Integer.parseInt(columns[i].trim().replace(",", "."));
             for (int i = 0; i < columns.length - 3; i++) {
                 try {
-                    doubleValues[i] = Float.parseFloat(columns[i + 2]);
+                    doubleValues[i] = Float.parseFloat(columns[i + 2].trim().replace(",", "."));
                 } catch (NumberFormatException e) {
                     LOGGER.warn("The value \"{}\" is not parsable to double !", columns[i]);
                 }
             }
 
-            Strip strip = getStripById(integerValues[1]).orElse(new Strip(integerValues[1], standId, doubleValues[8],
+            Strip strip = getStripById(integerValues[1]).orElse(new Strip(integerValues[1], doubleValues[8],
                     doubleValues[9], doubleValues[10], doubleValues[11], doubleValues[12]));
-            StripDataEntry entry = new StripDataEntry(strip, doubleValues[16], integerValues[0], integerValues[1],
+            StripDataEntry entry = new StripDataEntry(strip, doubleValues[16], integerValues[0], standId, integerValues[1],
                     doubleValues[0], doubleValues[1], doubleValues[2], doubleValues[3], doubleValues[4], doubleValues[5],
                     doubleValues[6], doubleValues[7], doubleValues[13], doubleValues[14], doubleValues[15], doubleValues[17],
                     doubleValues[18], doubleValues[19], doubleValues[20], doubleValues[21]);
@@ -76,6 +82,10 @@ public class DatabaseInserter {
         bufferedReader.close();
     }
 
+    /**
+     * @param stripId linked to the queried strip
+     * @return the Strip associated to the given strip id, if any
+     */
     private Optional<Strip> getStripById(int stripId) {
         return strips.stream().filter(strip -> strip.getStripId() == stripId).findAny();
     }

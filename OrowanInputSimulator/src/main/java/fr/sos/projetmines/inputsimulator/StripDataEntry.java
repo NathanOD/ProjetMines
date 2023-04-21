@@ -5,6 +5,7 @@ public class StripDataEntry {
     private final Strip strip;
     private final float inputError;
     private final int lp;
+    private final int standId;
     private final int matId;
     private final float xTime;
     private final float xLoc;
@@ -24,7 +25,7 @@ public class StripDataEntry {
     private final float rollSpeed;
 
 
-    public StripDataEntry(Strip strip, float inputError, int lp, int matId, float xTime, float xLoc,
+    public StripDataEntry(Strip strip, float inputError, int lp, int standId, int matId, float xTime, float xLoc,
                           float entryThickness, float exitThickness, float entryTension, float exitTension,
                           float rollForce, float forwardSlip, float mu, float torque, float averageSigma,
                           float waterFlowRateTop, float waterFlowRateBottom, float oilFlowRateTop,
@@ -32,6 +33,7 @@ public class StripDataEntry {
         this.strip = strip;
         this.inputError = inputError;
         this.lp = lp;
+        this.standId = standId;
         this.matId = matId;
         this.xTime = xTime;
         this.xLoc = xLoc;
@@ -61,6 +63,10 @@ public class StripDataEntry {
 
     public int getLp() {
         return lp;
+    }
+
+    public int getStandId() {
+        return standId;
     }
 
     public int getMatId() {

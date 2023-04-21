@@ -54,20 +54,23 @@ class UserManagingRequests {
      * @param username Name of the user
      * @param job      new job value
      */
-    public void setUserJob(String username, Job job) {
+    public boolean setUserJob(String username, Job job) {
         if (!database.isConnected()) {
             LOGGER.warn("Impossible to query the database: the connection is not established");
-            return;
+            return false;
         }
         try {
             String jobQuery = "UPDATE orowan_users SET job = ? WHERE username = ?";
             PreparedStatement statement = database.getConnection().prepareStatement(jobQuery);
             statement.setString(1, job.name());
             statement.setString(2, username);
+            int updatedRows = statement.executeUpdate();
             statement.close();
+            return updatedRows > 0;
         } catch (SQLException exception) {
             LOGGER.error(exception.getMessage());
         }
+        return false;
     }
 
 
@@ -104,21 +107,23 @@ class UserManagingRequests {
      *
      * @param username Name of the user to delete
      */
-    public void deleteUser(String username) {
+    public boolean deleteUser(String username) {
         if (!database.isConnected()) {
             LOGGER.warn("Impossible to query the database: the connection is not established");
-            return;
+            return false;
         }
         try {
             String addUserQuery = "DELETE FROM orowan_users WHERE username = ?";
             PreparedStatement addUserStatement = database.getConnection().prepareStatement(addUserQuery);
             addUserStatement.setString(1, username);
-            addUserStatement.executeUpdate();
+            int resultCount = addUserStatement.executeUpdate();
             addUserStatement.close();
             LOGGER.debug("Deleted the user ({}) from the database!", username);
+            return resultCount > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
+        return false;
     }
 
     public Optional<Set<String>> getUsers() {

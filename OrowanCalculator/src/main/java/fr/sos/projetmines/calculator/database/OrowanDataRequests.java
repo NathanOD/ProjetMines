@@ -1,15 +1,21 @@
 package fr.sos.projetmines.calculator.database;
 
+import fr.sos.projetmines.CurvePoint;
+import fr.sos.projetmines.FrictionCoefficient;
 import fr.sos.projetmines.calculator.model.OrowanDataOutput;
 import fr.sos.projetmines.calculator.model.OrowanSensorData;
 import fr.sos.projetmines.commonutils.database.DatabaseConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 class OrowanDataRequests {
 
@@ -30,7 +36,7 @@ class OrowanDataRequests {
             return Optional.empty();
         }
         try {
-            String dataQuery = "SELECT S.stand_id, IO.lp, IO.X_LOC, IO.entry_thickness, IO.exit_thickness, IO.entry_tension, IO.exit_tension, " +
+            String dataQuery = "SELECT IO.stand_id, IO.lp, IO.X_LOC, IO.entry_thickness, IO.exit_thickness, IO.entry_tension, IO.exit_tension, " +
                     "S.work_roll_diameter, S.young_modulus, IO.average_sigma, IO.mu, IO.roll_force, IO.forward_slip, IO.X_TIME, IO.ROLL_SPEED " +
                     "FROM INPUT_OROWAN IO " +
                     "JOIN STRIPS S ON IO.mat_id = S.strip_id\n" +
@@ -87,6 +93,28 @@ class OrowanDataRequests {
 
             dataEntryStatement.executeUpdate();
             dataEntryStatement.close();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+
+    /**
+     * Saves the Orowan output average data into the database
+     */
+    public void saveOrowanAverageOutput(float meanXTime, float averageFriction) {
+        if (!database.isConnected()) {
+            LOGGER.warn("Impossible to query the database: the connection is not established");
+            return;
+        }
+        try {
+            String dataEntry = "INSERT INTO OUTPUT_OROWAN_AVERAGE (mean_x_time, friction) VALUES (?,?)";
+            PreparedStatement averageDataEntry = database.getConnection().prepareStatement(dataEntry);
+            averageDataEntry.setFloat(1, meanXTime);
+            averageDataEntry.setFloat(2, averageFriction);
+
+            averageDataEntry.executeUpdate();
+            averageDataEntry.close();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }

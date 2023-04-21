@@ -18,10 +18,18 @@ class InputRangeRequests {
 
     private final DatabaseConnection database;
 
+    /**
+     * Constructs a new InputRangeRequests object with the given database connection.
+     * @param connection the database connection to use
+     */
     public InputRangeRequests(DatabaseConnection connection) {
         this.database = connection;
     }
 
+    /**
+     * Retrieves the set of input data ranges from the database.
+     * @return the set of input data ranges
+     */
     public Set<OrowanInputDataRange> getInputRanges() {
         Set<OrowanInputDataRange> inputRanges = new HashSet<>();
         if (!database.isConnected()) {
@@ -54,6 +62,10 @@ class InputRangeRequests {
         return inputRanges;
     }
 
+    /**
+     * Updates an input data range in the database.
+     * @param inputDataRange the input data range to update
+     */
     public void updateConstraintInputRange(OrowanInputDataRange inputDataRange) {
         if (!database.isConnected()) {
             LOGGER.warn("Impossible to query the database: the connection is not established");

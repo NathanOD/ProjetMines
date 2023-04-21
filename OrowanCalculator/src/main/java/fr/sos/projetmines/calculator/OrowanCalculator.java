@@ -28,6 +28,10 @@ public class OrowanCalculator {
     private final DataFormatter dataFormatter;
     //-----------
 
+    /**
+     *Constructs a new instance of the OrowanCalculator class. Initializes the required components
+     * and starts the RPC connections.
+     */
     private OrowanCalculator() {
         instance = this;
         this.dataInputBroadcaster = new OEventBroadcaster();
@@ -54,38 +58,28 @@ public class OrowanCalculator {
         startRPCConnections();
     }
 
+    /**
+     * Gets the singleton instance of the OrowanCalculator.
+     * @return The singleton instance of the OrowanCalculator.
+     */
     public static OrowanCalculator getInstance() {
         return instance;
     }
 
+    /**
+     * The main method for the OrowanCalculator. Constructs a new instance of the OrowanCalculator.
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         new OrowanCalculator();
     }
 
-    private static void simulateData() {
-        Random random = new Random();
-
-        new Thread(() -> {
-            long time = System.currentTimeMillis();
-            while (true) {
-                OrowanDataOutput output = new OrowanDataOutput(0, "VOID", 0, 45 + random.nextInt(10), 0,
-                        50, 0, 0, 0, 0, 0, "YES");
-                output.setComputationTime(204);
-                output.setRollSpeed(0);
-                output.setXTime(System.currentTimeMillis() - time);
-                Map<String, Object> data = new HashMap<>();
-                data.put("standId", 3);
-                data.put("output", output);
-                OrowanCalculator.getInstance().getDataInputBroadcaster().broadcast(data);
-                try {
-                    Thread.sleep(195L + random.nextInt(10));
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }).start();
-    }
-
+    /**
+     * Retrieves the configuration from the system's config.properties file and validates it against a set of expectations.
+     * If the configuration is valid, returns an Optional object containing the Configuration object.
+     * Otherwise, returns an empty Optional object.
+     * @return an Optional object containing the Configuration object if the configuration is valid, or an empty Optional object otherwise.
+     */
     private Optional<Configuration> getConfiguration() {
         Path configPath = Path.of(System.getProperty("user.dir"), "config.properties");
         Set<ConfigurationExpectation> expectations = new HashSet<>();
@@ -114,6 +108,14 @@ public class OrowanCalculator {
         return Optional.empty();
     }
 
+    /**
+     * Gets a connection to the database using the configuration's "db-url", "db-name", "db-properties", "db-username", and "db-password" values.
+     * It concatenates the "db-url", "db-name", and "db-properties" values to form the address.
+     * It creates a new CalculatorDatabaseFacade object with the address, username, and password.
+     * It attempts to connect to the database and returns an empty Optional if the connection fails.
+     * Otherwise, it returns an Optional containing the CalculatorDatabaseFacade object.
+     * @return an Optional containing a CalculatorDatabaseFacade object if the connection was successful, otherwise an empty Optional.
+     */
     private Optional<CalculatorDatabaseFacade> getDatabaseConnection() {
         String address = "jdbc:h2:" + config.getConcatenatedValue("db-url", "db-name", "db-properties");
         String username = config.getStringValue("db-username");
@@ -126,6 +128,12 @@ public class OrowanCalculator {
         return Optional.of(database);
     }
 
+    /**
+     * Starts the remote procedure call (RPC) connections and blocks until shutdown.
+     * It creates a CalculatorServers object based on the configuration's "rpc-minimal-port" value and starts the servers.
+     * It also creates a DatabaseNotifierClient object and starts listening for updates in a new thread.
+     * The method blocks until the servers are shutdown.
+     */
     private void startRPCConnections() {
         CalculatorServers servers = new CalculatorServers(config.getIntValue("rpc-minimal-port"));
         DatabaseNotifierClient client = new DatabaseNotifierClient();
@@ -140,18 +148,34 @@ public class OrowanCalculator {
 
     }
 
+    /**
+     *Retrieves the configuration object.
+     * @return An instance of the Configuration class that contains the details of the application's configuration.
+     */
     public Configuration getConfig() {
         return config;
     }
 
+    /**
+     * Retrieves the database connection object.
+     * @return An instance of the CalculatorDatabaseFacade class that provides access to the underlying database.
+     */
     public CalculatorDatabaseFacade getDatabase() {
         return database;
     }
 
+    /**
+     * Retrieves the data input broadcaster object.
+     * @return An instance of the OEventBroadcaster class that broadcasts incoming data inputs to all registered listeners.
+     */
     public OEventBroadcaster getDataInputBroadcaster() {
         return dataInputBroadcaster;
     }
 
+    /**
+     * Retrieves the data formatter object.
+     * @return An instance of the DataFormatter class that formats data inputs for display purposes.
+     */
     public DataFormatter getDataFormatter() {
         return dataFormatter;
     }
