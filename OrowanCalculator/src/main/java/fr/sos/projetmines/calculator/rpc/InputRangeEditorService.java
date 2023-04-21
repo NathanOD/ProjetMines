@@ -14,7 +14,13 @@ public class InputRangeEditorService extends InputRangeEditorGrpc.InputRangeEdit
 
     private final DataFormatter dataFormatter = OrowanCalculator.getInstance().getDataFormatter();
 
-
+    /**
+     * Updates the input range of the specified constraint with the given minimum and maximum values.
+     * Responds with an {@link OrowanOperationResult} indicating whether the operation was successful or not.
+     *
+     * @param request         The request containing the constraint name, minimum value, and maximum value.
+     * @param responseObserver The observer to send the response to.
+     */
     @Override
     public void editInputRange(InputRangeEditRequest request, StreamObserver<OrowanOperationResult> responseObserver) {
         dataFormatter.updateDataRange(request.getConstraintName(), request.getMinValue(), request.getMaxValue());

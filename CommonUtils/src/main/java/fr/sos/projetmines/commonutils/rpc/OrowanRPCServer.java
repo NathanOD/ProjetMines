@@ -16,7 +16,12 @@ public class OrowanRPCServer {
     private final Server server;
     private final String serverName;
 
-
+    /**
+     *Constructs an OrowanRPCServer instance with the specified port number, server name and gRPC service implementation.
+     * @param port the port number to listen on.
+     * @param serverName the name of the server.
+     * @param service the gRPC service implementation.
+     */
     public OrowanRPCServer(int port, String serverName, BindableService service) {
         this.serverName = serverName;
         server = ServerBuilder.forPort(port).addService(service).build();

@@ -13,7 +13,12 @@ import java.util.Arrays;
 public class OrowanAuthenticatorService extends OrowanAuthenticatorGrpc.OrowanAuthenticatorImplBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrowanAuthenticatorService.class);
+    /**
 
+     Authenticates the user credentials and grants access to the Orowan Calculator if they are valid.
+     @param request the OrowanUserCredentials containing the username and password of the user
+     @param responseObserver the response observer for returning the OrowanConnectionResult
+     */
     @Override
     public void authenticateUser(OrowanUserCredentials request, StreamObserver<OrowanConnectionResult> responseObserver) {
         LOGGER.debug("Received an authentication request.");

@@ -23,6 +23,9 @@ public class DatabaseNotifier {
     private final OEventBroadcaster broadcaster;
     private boolean isUp = false;
 
+    /**
+     * Constructs the DatabaseNotifier object by initializing the OEventBroadcaster and starting an RPC server.
+     */
     private DatabaseNotifier() {
         this.broadcaster = new OEventBroadcaster();
         Optional<Configuration> configOpt = getConfiguration();
@@ -46,10 +49,20 @@ public class DatabaseNotifier {
         isUp = true;
     }
 
+    /**
+     * Returns the singleton instance of this class.
+     * @return the singleton instance of this class
+     */
     public static DatabaseNotifier getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Retrieves the configuration from the config file and returns an Optional object
+     * containing the Configuration object if the configuration is valid, or an empty Optional otherwise.
+     * @return an Optional object containing the Configuration object if the configuration
+     * is valid, or an empty Optional otherwise
+     */
     private Optional<Configuration> getConfiguration() {
         Path configPath = Path.of(System.getProperty("user.dir"), "config.properties");
         LOGGER.info("Configuration file path: {}", configPath);
@@ -70,10 +83,18 @@ public class DatabaseNotifier {
         return Optional.empty();
     }
 
+    /**
+     * Returns a flag indicating whether the RPC server is up and running.
+     * @return a flag indicating whether the RPC server is up and running
+     */
     public boolean isUp() {
         return isUp;
     }
 
+    /**
+     * Returns the object used to broadcast events to the registered listeners.
+     * @return the object used to broadcast events to the registered listeners
+     */
     public OEventBroadcaster getBroadcaster() {
         return broadcaster;
     }

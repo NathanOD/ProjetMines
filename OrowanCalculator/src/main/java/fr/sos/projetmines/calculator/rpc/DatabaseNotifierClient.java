@@ -27,7 +27,9 @@ public class DatabaseNotifierClient {
 
     private final EventNotifierGrpc.EventNotifierStub client; //asynchronous
     private final int port;
-
+    /**
+     * Instantiates a new DatabaseNotifierClient.
+     */
     public DatabaseNotifierClient() {
         Configuration config = OrowanCalculator.getInstance().getConfig();
         this.port = config.getIntValue("rpc-db-port");
@@ -36,7 +38,11 @@ public class DatabaseNotifierClient {
 
         client = EventNotifierGrpc.newStub(channel);
     }
-
+    /**
+     * Starts listening for updates from the database notifier service.
+     * When an update is received, it converts the sensor data to an input file, runs the Orowan executable,
+     * saves the output to the database, and broadcasts the updated data to the data input broadcaster.
+     */
     public void startListeningForUpdates() {
         SubscribingRequest subscribingRequest = SubscribingRequest.newBuilder().build();
         OrowanCalculator calculator = OrowanCalculator.getInstance();
