@@ -4,81 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c70995-f1a2-4ca9-8ab9-078219889814" name="Changes" comment="Final commit. Added last features. Added READMEs. Added javadoc">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CommonUtils/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DatabaseNotifier/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanCalculator/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/StandRequests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/GUIStarter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/ChoiceSceneController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/StandManagementClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/ListStandsTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/UpdateStandStateTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/choice-scene.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/Krakov/1939351_F2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/Krakov/1939351_F3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/Krakov/Columns_header.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/config.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/resources/default-configuration.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-proto/README.md" afterDir="false" />
+    <list default="true" id="66c70995-f1a2-4ca9-8ab9-078219889814" name="Changes" comment="Added javadoc">
       <change afterPath="$PROJECT_DIR$/utils/database_generation.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/event/OEventBroadcaster.java" beforeDir="false" afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/event/OEventBroadcaster.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/event/OEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/event/OEventListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/rpc/OrowanRPCServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/CommonUtils/src/main/java/fr/sos/projetmines/commonutils/rpc/OrowanRPCServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseNotifier/src/main/java/fr/sos/projetmines/databasenotifier/DatabaseNotifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseNotifier/src/main/java/fr/sos/projetmines/databasenotifier/DatabaseNotifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DatabaseNotifier/src/main/java/fr/sos/projetmines/databasenotifier/DatabaseTrigger.java" beforeDir="false" afterPath="$PROJECT_DIR$/DatabaseNotifier/src/main/java/fr/sos/projetmines/databasenotifier/DatabaseTrigger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/OrowanCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/OrowanCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/AuthenticatorRequests.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/AuthenticatorRequests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/CalculatorDatabaseFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/CalculatorDatabaseFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/InputRangeRequests.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/InputRangeRequests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/OrowanDataRequests.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/OrowanDataRequests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/UserManagingRequests.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/database/UserManagingRequests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/CalculatorServers.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/CalculatorServers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/DatabaseNotifierClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/DatabaseNotifierClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/InputRangeEditorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/InputRangeEditorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/OrowanAuthenticatorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/OrowanAuthenticatorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/OrowanLiveDataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/OrowanLiveDataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/StandManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/StandManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/UserManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanCalculator/src/main/java/fr/sos/projetmines/calculator/rpc/UserManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/OrowanGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/OrowanGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/EngineerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/EngineerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/OrowanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/OrowanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/WorkerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/controller/WorkerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/OrowanAuthenticatorClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/OrowanAuthenticatorClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/OrowanLiveDataClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/OrowanLiveDataClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/UserManagementClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/rpc/UserManagementClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/AuthenticatorTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/AuthenticatorTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/CreateUserTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/CreateUserTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/DeleteUserTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/DeleteUserTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/ListUsersTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/ListUsersTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/LiveDataTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/LiveDataTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/UpdateUserJobTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/UpdateUserJobTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/UserManagementTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/java/fr/sos/projetmines/gui/util/UserManagementTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/bundles/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/bundles/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/bundles/strings_fr.properties" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/bundles/strings_fr.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/engineer-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/engineer-scene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/login-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/login-scene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/time-series-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/time-series-scene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/worker-scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanGUI/src/main/resources/fr.sos.projetmines.gui/worker-scene.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/DatabaseInserter.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/DatabaseInserter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/InputSimulatorDatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/InputSimulatorDatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/OrowanInputSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/OrowanInputSimulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/Strip.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/Strip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/StripDataEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/OrowanInputSimulator/src/main/java/fr/sos/projetmines/inputsimulator/StripDataEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-proto/OrowanLiveDataProvider.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-proto/OrowanLiveDataProvider.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-proto/StandManagement.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-proto/StandManagement.proto" afterDir="false" />
     </list>
     <list id="dd0a7515-1bc3-4e89-8b68-827ddf9527f1" name="Changes by hp" comment="" />
     <list id="78b80d39-3008-4b67-a6db-a77981f0bde8" name="Changes by nathanodic" comment="" />
@@ -152,6 +79,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="Sidiplayer &lt;sidi.sid-ahmed@mines-ales.org&gt;, steven henry &lt;stevenhenry83270@gmail.com&gt;, nathanod &lt;nathan.odic@mines-ales.org&gt;" />
         <option value="Steven HENRY &lt;stevenhenry83270@gmail.com&gt; &amp; Sidiplayer &lt;sidi" />
         <option value="Sidiplayer &lt;sidi.sid-ahmed@mines-ales.org&gt;, steven henry &lt;stevenhenry83270@gmail.com&gt;" />
         <option value="Steven HENRY &lt;stevenhenry83270@gmail.com&gt;" />
@@ -373,7 +301,7 @@
       <workItem from="1682028628392" duration="3036000" />
       <workItem from="1682031684521" duration="3157000" />
       <workItem from="1682035003797" duration="5627000" />
-      <workItem from="1682040722693" duration="341000" />
+      <workItem from="1682040722693" duration="676000" />
     </task>
     <task id="LOCAL-00001" summary="Updated GUI:&#10;- Added 3 scenes (Worker, admin and time series)&#10;- Added an address field to the login scene (with its translations)">
       <created>1681572992882</created>
@@ -585,7 +513,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681864131600</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Final commit. Added last features. Added READMEs. Added javadoc">
+      <created>1682041118801</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1682041118801</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Added javadoc">
+      <created>1682041334593</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1682041334593</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -603,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated Calculator:&#10;- Added data process pipeline&#10;- Linked the pipeline parts" />
     <MESSAGE value="Updated Calculator:&#10;- Added RPC support (GUI User request + DatabaseNotifier events)" />
     <MESSAGE value="Updated Calculator:&#10;- Updated main method to call the different services (RPC, data processor)&#10;- Updated configuration and database communcation file" />
     <MESSAGE value="Updated InputSimulator:&#10;- Added data model classes (Strip and StripDataEntry that refers to the database tables)&#10;- Changed logger format&#10;- Added Database connection util file&#10;- Added a class containing and calling the main method (OrowanInputSimulator)" />
@@ -628,7 +569,8 @@
     <MESSAGE value="Pipeline is fully operationnal, added usermanagement support (creating, promoting, demoting but still not fully functionnal). Added input range validation, increased diagrams size, changed their colors, added x axis unit" />
     <MESSAGE value="Improved UserManagement" />
     <MESSAGE value="Final commit. Added last features. Added READMEs. Added javadoc" />
-    <option name="LAST_COMMIT_MESSAGE" value="Final commit. Added last features. Added READMEs. Added javadoc" />
+    <MESSAGE value="Added javadoc" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added javadoc" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
