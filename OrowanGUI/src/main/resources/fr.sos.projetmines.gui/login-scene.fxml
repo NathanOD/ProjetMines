@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="loginMainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.sos.projetmines.gui.controller.LoginController">
+   <top>
+      <MenuBar fx:id="loginMenuBar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="%ui.login.menubar.file">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#close" text="%ui.login.menubar.file.close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox fx:id="loginContent" accessibleHelp="Division that holds the identifier's label and field" accessibleText="Main content div" alignment="CENTER" cache="true" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="loginTitle" alignment="CENTER" contentDisplay="CENTER" text="%ui.login.title" wrapText="true">
+               <font>
+                  <Font size="48.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="60.0" />
+               </VBox.margin></Label>
+             <VBox fx:id="hostBox" accessibleHelp="Division that holds the host label and field " accessibleText="host division " maxHeight="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                 <children>
+                     <Label fx:id="hostLabel" text="%ui.login.host.label">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                     <TextField fx:id="hostField" text="localhost:32765">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+                 </children>
+             </VBox>
+
+             <VBox fx:id="loginIdentifierBox" accessibleHelp="Division that holds the identifier's label and field" accessibleText="Identifier's division" maxHeight="-Infinity" prefHeight="0.0" prefWidth="0.0">
+               <children>
+                  <Label fx:id="loginIdentifierLabel" text="%ui.login.identifier.label">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <TextField fx:id="loginIdentifierField">
+                     <font>
+                        <Font size="14.0" />
+                     </font></TextField>
+               </children>
+            </VBox>
+            <VBox fx:id="loginPasswordBox" accessibleHelp="Division that holds the password's label and field" accessibleText="Password's division" prefHeight="0.0" prefWidth="0.0">
+               <children>
+                  <Label fx:id="loginPasswordLabel" text="%ui.login.password.label">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <PasswordField fx:id="loginPasswordField">
+                     <font>
+                        <Font size="14.0" />
+                     </font></PasswordField>
+               </children>
+            </VBox>
+            <Button fx:id="connectButton" mnemonicParsing="false" onMouseClicked="#attemptConnection" text="%ui.login.connectButton">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="100.0" right="100.0" />
+         </padding>
+      </VBox>
+   </center>
+   <bottom>
+      <FlowPane fx:id="loginErrorBox" accessibleHelp="Division that holds the label showing error messages" accessibleText="Error division" alignment="CENTER" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="errorLabel" />
+         </children></FlowPane>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Extra logging related to initialization of Log4j.
+ Set to debug or trace if log4j initialization is failing. -->
+<Configuration status="info">
+    <Appenders>
+        <!-- Console appender configuration -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <LevelPatternSelector defaultPattern="%d{HH:mm:ss} %highlight{[%-5p] | %c:%L > %m}{bright,red}%n">
+                    <PatternMatch key="WARN" pattern="%highlight{%d{HH:mm:ss} [%-5p] | %c{1}:%L > %m}{bright,yellow}%n" />
+                    <PatternMatch key="INFO" pattern="%d{HH:mm:ss} [%style{%-5p}{blue}] | %c{1}:%L > %m%n" />
+                    <PatternMatch key="DEBUG" pattern="%d{HH:mm:ss} [%style{%-5p}{white}] | %c{2}:%L > %m%n" />
+                    <PatternMatch key="TRACE" pattern="%d{HH:mm:ss} [%style{%-5p}{red}] | %c{1}:%L > %m%n" />
+                </LevelPatternSelector>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Root logger referring to console appender -->
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Root>
+        <Logger level="warn" name="io.grpc.netty">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger level="warn" name="io.netty">
+            <AppenderRef ref="console" />
+        </Logger>
+    </Loggers>
+</Configuration>

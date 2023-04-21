@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="workerMainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.sos.projetmines.gui.controller.WorkerController">
+    <top>
+        <MenuBar fx:id="workerMenuBar" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="switchViewButton" mnemonicParsing="false" onAction="#switchView" text="%ui.login.menubar.file.switch" visible="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#disconnect" text="%ui.login.menubar.file.disconnect" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="%ui.login.menubar.file.close" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="0.0" spacing="30.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="computationTimeLabel" text="%ui.worker.computationtime" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <Label fx:id="frictionFactorLabel" text="%ui.worker.frictionfactor" textAlignment="CENTER" textFill="red" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <Label fx:id="averageFrictionFactorLabel" text="%ui.worker.frictionfactor.average" textAlignment="CENTER" textFill="royalblue" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <Label fx:id="rollSpeedLabel" text="%ui.worker.rollspeed" textAlignment="CENTER" textFill="green" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+                <Label fx:id="sigmaLabel" text="%ui.worker.sigma" textAlignment="CENTER" textFill="blue" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            </children>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+            <padding>
+                <Insets bottom="5.0" top="5.0" />
+            </padding>
+        </HBox>
+    </bottom>
+    <center>
+        <VBox fx:id="chartBox" alignment="CENTER" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+            <children>
+                <LineChart fx:id="frictionChart" cache="true" cacheHint="SCALE" legendSide="TOP" legendVisible="false" prefHeight="0.0" prefWidth="0.0" title="%ui.worker.chart.friction" VBox.vgrow="ALWAYS">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM" style="-fx-stroke: black;" fx:id="xAxisFriction" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxisFriction" side="LEFT" style="-fx-stroke: black;" />
+                    </yAxis>
+                    <padding>
+                        <Insets right="15.0" />
+                    </padding>
+                </LineChart>
+                <LineChart fx:id="rollSpeedChart" cache="true" cacheHint="SCALE" legendSide="TOP" legendVisible="false" prefHeight="0.0" prefWidth="0.0" title="%ui.worker.chart.rollspeed" VBox.vgrow="ALWAYS">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM" style="-fx-stroke: black;" fx:id="xAxisRollSpeed" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxisRollSpeed" side="LEFT" style="-fx-stroke: black;" />
+                    </yAxis>
+                    <padding>
+                        <Insets right="15.0" />
+                    </padding>
+                </LineChart>
+                <LineChart fx:id="sigmaChart" cache="true" cacheHint="SCALE" legendSide="TOP" legendVisible="false" prefHeight="0.0" prefWidth="0.0" title="%ui.worker.chart.sigma" VBox.vgrow="ALWAYS">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM" style="-fx-stroke: black;" fx:id="xAxisSigma" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis fx:id="yAxisSigma" side="LEFT" style="-fx-stroke: black;" />
+                    </yAxis>
+                    <padding>
+                        <Insets right="15.0" />
+                    </padding>
+                </LineChart>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="sceneChoicePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.sos.projetmines.gui.controller.ChoiceSceneController">
+    <top>
+        <MenuBar fx:id="loginMenuBar" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="%ui.login.menubar.file">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#refresh" text="%ui.login.menubar.file.refresh" />
+                        <MenuItem mnemonicParsing="false" onAction="#disconnect" text="%ui.login.menubar.file.disconnect" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="%ui.login.menubar.file.close" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <bottom>
+        <FlowPane fx:id="loginErrorBox" accessibleHelp="Division that holds the label showing error messages" accessibleText="Error division" alignment="CENTER" prefHeight="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="errorLabel" />
+            </children>
+        </FlowPane>
+    </bottom>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="%ui.choice.title">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </Label>
+              <VBox alignment="CENTER" minHeight="175.0" minWidth="250.0" prefHeight="0.0" prefWidth="0.0" spacing="20.0">
+                  <children>
+                  <Label accessibleText="Empty space" visible="false" />
+                      <Label text="%ui.choice.standid" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                      <ChoiceBox fx:id="choiceStandIdBox" prefWidth="250.0" />
+                      <Button fx:id="choiceWorkerButton" mnemonicParsing="false" onMouseClicked="#showWorkerScene" prefWidth="250.0" text="%ui.choice.worker">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="choiceEngineerButton" mnemonicParsing="false" onMouseClicked="#showEngineerScene" prefWidth="250.0" text="%ui.choice.engineer" visible="false">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  </children>
+              </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

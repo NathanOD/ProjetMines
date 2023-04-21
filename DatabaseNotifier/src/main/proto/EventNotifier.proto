@@ -1,0 +1,16 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+message SubscribingRequest {
+
+}
+
+message EventNotification {
+  int32 entryId = 1;
+}
+
+// Server connects to the DatabaseNotifier and receives an empty message when a new row is added
+service EventNotifier {
+  rpc RowInserted (SubscribingRequest) returns (stream EventNotification);
+}

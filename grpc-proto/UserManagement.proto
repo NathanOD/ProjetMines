@@ -1,0 +1,32 @@
+syntax = "proto3";
+option java_package = "fr.sos.projetmines";
+option java_multiple_files = true;
+
+import "OrowanAuthenticator.proto";
+import "OrowanOperation.proto";
+
+message UserCreationRequest {
+  string username = 1;
+  string password = 2;
+  Job job = 3;
+}
+
+message UserDeletionRequest {
+  string username = 1;
+}
+
+message UserJobUpdateRequest {
+  string username = 1;
+  Job job = 2;
+}
+
+message ListUsersRequest {
+
+}
+
+service UserManagement {
+  rpc CreateUser (UserCreationRequest) returns (OrowanOperationResult);
+  rpc DeleteUser (UserDeletionRequest) returns (OrowanOperationResult);
+  rpc SetUserJob (UserJobUpdateRequest) returns (OrowanOperationResult);
+  rpc ListUsers (ListUsersRequest) returns (stream OrowanUserCredentials);
+}

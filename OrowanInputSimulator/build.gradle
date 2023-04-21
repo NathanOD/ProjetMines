@@ -1,0 +1,36 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+}
+
+group 'fr.sos.projetmines.inputsimulator'
+version '1.0'
+description = "Projet Mines x ArcelorMittal - Orowan - InputSimulator module"
+
+
+// -------------------- DEPENDENCIES --------------------
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // H2 Database driver
+    implementation 'com.h2database:h2:2.1.214'
+
+
+    //Common utils
+    implementation project(':CommonUtils')
+}
+
+//-------------------- ARCHIVE GENERATION --------------------
+
+shadowJar {
+    archiveClassifier.set('InputSimulator')
+    archiveBaseName.set('Mines-x-ArcelorMittal_Orowan')
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'fr.sos.projetmines.inputsimulator.OrowanInputSimulator'
+    }
+}
